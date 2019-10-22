@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/about">Wow</router-link>
-    </nav>
+    <main-nav></main-nav>
     <router-view></router-view>
     <site-map :routes="routesList"></site-map>
   </div>
@@ -11,6 +9,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import SiteMap from "@/components/SiteMap.vue";
+import MainNav from "@/components/MainNav.vue";
 
 interface routeObject {
   name: string;
@@ -18,7 +17,7 @@ interface routeObject {
 }
 
 @Component({
-  components: { SiteMap },
+  components: { SiteMap, MainNav },
 })
 export default class App extends Vue {
   routesList!: any[];
