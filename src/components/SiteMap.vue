@@ -11,18 +11,10 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-
-interface routeObject {
-  name: string;
-  path: string;
-}
+import { RouteObject } from "@/types";
 
 @Component
 export default class SiteMap extends Vue {
-  @Prop() routes!: Array<routeObject>;
-
-  created() {
-    console.log("site map created");
-  }
+  @Prop() private routes!: RouteObject[];
 }
 </script>

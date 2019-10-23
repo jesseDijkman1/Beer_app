@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <main-nav></main-nav>
-    <router-view></router-view>
+
+    <keep-alive include="Home">
+      <router-view></router-view>
+    </keep-alive>
+
     <site-map :routes="routesList"></site-map>
   </div>
 </template>
@@ -10,21 +14,18 @@
 import { Component, Vue } from "vue-property-decorator";
 import SiteMap from "@/components/SiteMap.vue";
 import MainNav from "@/components/MainNav.vue";
-
-interface routeObject {
-  name: string;
-  path: string;
-}
+import { RouteObject } from "@/types";
 
 @Component({
   components: { SiteMap, MainNav },
 })
 export default class App extends Vue {
-  routesList!: any[];
+  private routesList!: RouteObject[];
 
-  created() {
+  private beforeCreate() {
+    // @ts-ignore: Property 'options' does not exist on type 'VueRouter'.
     this.routesList = this.$router.options.routes.map(
-      (route: any): routeObject => ({ name: route.name, path: route.path })
+      (route: any): RouteObject => ({ name: route.name, path: route.path })
     );
   }
 }
