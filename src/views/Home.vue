@@ -1,22 +1,33 @@
 <template>
   <div>
     <h1>Home</h1>
-    <sorting-table v-bind:dataArray="correctBeersData"></sorting-table>
+    <vue-table v-if="beers !== undefined" v-bind:columns="columns">
+      <vue-table-row v-bind:columns="columns" v-bind:key="beer.id" v-for="beer in correctBeersData">
+        <!-- <vue-table-cell v-bind:key="index" v-for="(value, index) in beer">{{value}}</vue-table-cell> -->
+        <vue-table-cell slot="id">{{beer.id}}</vue-table-cell>
+        <vue-table-cell slot="name">{{beer.name}}</vue-table-cell>
+        <vue-table-cell slot="description">{{beer.description}}</vue-table-cell>
+      </vue-table-row>
+    </vue-table>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import SortingTable from "@/components/SortingTable.vue";
+import VueTable from "@/components/vue-table.vue";
+import VueTableRow from "@/components/vue-table-row.vue";
+import VueTableCell from "@/components/vue-table-cell.vue";
 import { BeerData } from "@/types";
 
 @Component({
   components: {
-    SortingTable,
+    VueTable,
+    VueTableRow,
+    VueTableCell,
   },
 })
 export default class Home extends Vue {
-  beers: BeerData[] = [];
+  beers: any = [];
 
   async beforeCreate() {
     const page: number = new Date().getDate();
@@ -32,8 +43,12 @@ export default class Home extends Vue {
     }
   }
 
-  get correctBeersData() {
-    return this.beers.map(function(beerObject): BeerData {
+  get columns(): string[] {
+    return Object.keys(this.correctBeersData[0]);
+  }
+
+  get correctBeersData(): BeerData[] {
+    return this.beers.map(function(beerObject: BeerData): BeerData {
       return {
         id: beerObject.id,
         name: beerObject.name,
