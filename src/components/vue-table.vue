@@ -1,6 +1,6 @@
-<template>
+<template >
   <table>
-    <thead>
+    <thead v-if="columns !== undefined">
       <tr>
         <th v-bind:key="column" v-for="column in columns">{{column}}</th>
       </tr>
@@ -17,6 +17,12 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class VueTable extends Vue {
-  @Prop() columns!: string[];
+  @Prop({ default: undefined }) columns!: string[];
 }
 </script>
+
+<style scoped>
+* {
+  border: solid 1px black;
+}
+</style>
