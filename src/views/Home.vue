@@ -1,23 +1,21 @@
 <template>
   <div>
     <h1>Home</h1>
-    <vue-table v-if="beers !== undefined" v-bind:columns="columns">
-      <vue-table-row v-bind:columns="columns" v-bind:key="beer.id" v-for="beer in correctBeersData">
-        <vue-table-cell v-bind:style="{background: getColorFromEbc(beer.ebc)}" slot="color"></vue-table-cell>
-        <vue-table-cell slot="id">{{beer.id}}</vue-table-cell>
-        <vue-table-cell slot="name">{{beer.name}}</vue-table-cell>
-        <vue-table-cell slot="description">{{beer.description}}</vue-table-cell>
-        <vue-table-cell slot="ebc">{{beer.ebc}}</vue-table-cell>
-      </vue-table-row>
-    </vue-table>
+    <sortable-table v-on:sortTable="setSorting" :data="correctBeersData" :columns="columns">
+      <template slot-scope="{column, obj}">
+        <div
+          v-if="column == 'color'"
+          class="color-display"
+          :style="{background: getColorFromEbc(obj.ebc)}"
+        ></div>
+      </template>
+    </sortable-table>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import VueTable from "@/components/vue-table.vue";
-import VueTableRow from "@/components/vue-table-row.vue";
-import VueTableCell from "@/components/vue-table-cell.vue";
+import { Component, Watch, Vue } from "vue-property-decorator";
+import SortableTable from "@/components/SortableTable.vue";
 import { BeerData } from "@/types";
 
 import colorFromValue from "@/modules/color-scaler.ts";
@@ -28,6 +26,7 @@ import ebcColorScheme from "@/assets/ebc-color-scheme.ts";
     VueTable,
     VueTableRow,
     VueTableCell,
+    SortableTable,
   },
 })
 export default class Home extends Vue {
@@ -68,4 +67,9 @@ export default class Home extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.color-display {
+  width: 30px;
+  height: 30px;
+  border-radius: 100px;
+}
 </style>
