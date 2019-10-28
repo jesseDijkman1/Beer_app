@@ -13,7 +13,10 @@
           :style="{background: getColorFromEbc(obj.ebc)}"
         ></div>
 
-        <router-link v-else-if="column == 'name'" :to="`/beers/${obj.id}`">{{obj.name}}</router-link>
+        <router-link
+          v-else-if="column == 'name'"
+          :to="{name: 'detail', params: {id: obj.id, data: obj}}"
+        >{{obj.name}}</router-link>
       </template>
     </sortable-table>
   </div>
@@ -45,7 +48,6 @@ export default class Home extends Vue {
 
       this.beers = await response.json();
 
-      console.log(this.beers);
       this.sortBeers();
     } catch (error) {
       throw new Error("API call failed!");

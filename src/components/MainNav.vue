@@ -2,7 +2,10 @@
   <nav>
     <router-link to="/">Home!</router-link>
     <router-link to="/about">About</router-link>
-    <router-link @click.native="randomBeer = newRandomBeer()" :to="`/beers/${randomBeer}`">Random</router-link>
+    <router-link
+      @click.native="randomBeer = newRandomBeer()"
+      :to="{name: 'detail', params: {id: randomBeer, data: null}}"
+    >Random</router-link>
   </nav>
 </template>
 

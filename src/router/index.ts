@@ -17,7 +17,9 @@ const routes = [
   },
   {
     path: "/beers/:id",
-    component: () => import("../views/Detail.vue")
+    name: "detail",
+    component: () => import("../views/Detail.vue"),
+    props: true
   }
 ];
 
