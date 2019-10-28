@@ -23,9 +23,6 @@ import ebcColorScheme from "@/assets/ebc-color-scheme.ts";
 
 @Component({
   components: {
-    VueTable,
-    VueTableRow,
-    VueTableCell,
     SortableTable,
   },
 })
