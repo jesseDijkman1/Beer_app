@@ -1,7 +1,11 @@
 <template>
   <div>
     <h1>Home</h1>
-    <sortable-table v-on:sortTable="setSorting" :data="correctBeersData" :columns="columns">
+    <sortable-table
+      v-on:sortTable="setSorting"
+      :data="beers"
+      :columns="['color', 'id', 'name', 'ebc', 'description']"
+    >
       <template slot-scope="{column, obj}">
         <div
           v-if="column == 'color'"
@@ -16,7 +20,6 @@
 <script lang="ts">
 import { Component, Watch, Vue } from "vue-property-decorator";
 import SortableTable from "@/components/SortableTable.vue";
-import { BeerData } from "@/types";
 
 import colorFromValue from "@/modules/color-scaler.ts";
 import ebcColorScheme from "@/assets/ebc-color-scheme.ts";
@@ -27,8 +30,9 @@ import ebcColorScheme from "@/assets/ebc-color-scheme.ts";
   },
 })
 export default class Home extends Vue {
-  beers: any = [];
-  columns: string[] = ["color", "id", "name", "ebc", "description"];
+  beers: object[] = [];
+  sortingKey: string = "id";
+  ascending: boolean = true;
 
   async beforeCreate() {
     const page: number = new Date().getDate();
@@ -36,29 +40,49 @@ export default class Home extends Vue {
 
     try {
       const response = await fetch(url);
-      const data = await response.json();
 
-      this.beers = data;
+      this.beers = await response.json();
+      this.sortBeers();
     } catch (error) {
       throw new Error("API call failed!");
     }
   }
 
-  getColorFromEbc(e: number) {
-    return `rgb(${colorFromValue(e, ebcColorScheme)})`;
+  setSorting(key: string) {
+    if (key === this.sortingKey) {
+      this.ascending = !this.ascending;
+    } else {
+      this.ascending = true;
+      this.sortingKey = key;
+    }
   }
 
-  get correctBeersData(): BeerData[] {
-    return this.beers.map(
-      (beerObject: any): BeerData => {
-        return {
-          id: beerObject.id,
-          name: beerObject.name,
-          description: beerObject.description,
-          ebc: beerObject.ebc,
-        };
+  // Watch two values at once (seems to work)
+  @Watch("sortingKey")
+  @Watch("ascending")
+  fn() {
+    this.sortBeers();
+  }
+
+  sortBeers() {
+    this.beers.sort((_a: any, _b: any) => {
+      let b: string | number = _b[this.sortingKey];
+      let a: string | number = _a[this.sortingKey];
+
+      if (a > b) {
+        return this.ascending ? 1 : -1;
       }
-    );
+
+      if (b > a) {
+        return this.ascending ? -1 : 1;
+      }
+
+      return 0;
+    });
+  }
+
+  getColorFromEbc(e: number) {
+    return `rgb(${colorFromValue(e, ebcColorScheme)})`;
   }
 }
 </script>
