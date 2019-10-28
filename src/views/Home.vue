@@ -4,7 +4,7 @@
     <sortable-table
       v-on:sortTable="setSorting"
       :data="beers"
-      :columns="['color', 'id', 'name', 'ebc', 'description']"
+      :columns="['color', 'id', 'name', 'ebc']"
     >
       <template slot-scope="{column, obj}">
         <div
@@ -12,6 +12,8 @@
           class="color-display"
           :style="{background: getColorFromEbc(obj.ebc)}"
         ></div>
+
+        <router-link v-else-if="column == 'name'" :to="`/beers/${obj.id}`">{{obj.name}}</router-link>
       </template>
     </sortable-table>
   </div>
@@ -42,6 +44,8 @@ export default class Home extends Vue {
       const response = await fetch(url);
 
       this.beers = await response.json();
+
+      console.log(this.beers);
       this.sortBeers();
     } catch (error) {
       throw new Error("API call failed!");
