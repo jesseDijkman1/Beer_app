@@ -16,12 +16,17 @@ const routes = [
     component: () => import("../views/About.vue"),
   },
   {
-    path: "/beers",
+    path: "/beers/:page",
     name: "beers",
-    component: () => import("../views/List.vue")
+    component: () => import("../views/List.vue"),
+    props: true
   },
   {
-    path: "/beers/:id",
+    path: "/beers",
+    redirect: "/beers/1"
+  },
+  {
+    path: "/beer/:id",
     name: "detail",
     component: () => import("../views/Detail.vue"),
     props: true
