@@ -26,10 +26,6 @@ const routes = [
     component: () => import("../views/Detail.vue"),
     props: true
   },
-  {
-    path: "/random",
-    redirect: `/beers/${Math.floor(Math.random() * 325) + 1}`
-  }
 ];
 
 const router = new VueRouter({
