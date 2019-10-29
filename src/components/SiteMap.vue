@@ -10,11 +10,20 @@
 
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import { RouteObject } from "@/types";
 
 @Component
 export default class SiteMap extends Vue {
-  @Prop() private routes!: RouteObject[];
+  routes!: RouteObject[];
+
+  beforeCreate() {
+    // @ts-ignore: Property 'options' does not exist on type 'VueRouter'.
+    this.routes = this.$router.options.routes.map(
+      (route: any): RouteObject => {
+        return { name: route.name, path: route.path };
+      }
+    );
+  }
 }
 </script>

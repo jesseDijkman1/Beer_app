@@ -21,6 +21,7 @@
 import { Component, Watch, Vue } from "vue-property-decorator";
 import SortableTable from "@/components/SortableTable.vue";
 import EbcColorDisplay from "@/components/EbcColorDisplay.vue";
+import RandomBeerButton from "@/components/RandomBeerButton.vue";
 
 @Component({
   components: {
@@ -33,19 +34,23 @@ export default class Home extends Vue {
   sortingKey: string = "id";
   ascending: boolean = true;
 
-  async beforeCreate() {
-    const page: number = new Date().getDate();
-    const url: string = `https://api.punkapi.com/v2/beers?page=${page}&per_page=10`;
-
+  async getBeers(url: string) {
     try {
       const response = await fetch(url);
 
-      this.beers = await response.json();
-
-      this.sortBeers();
+      return Promise.resolve(await response.json());
     } catch (error) {
       throw new Error("API call failed!");
     }
+  }
+
+  async created() {
+    const page: number = new Date().getDate();
+    const url: string = `https://api.punkapi.com/v2/beers?page=${page}&per_page=10`;
+
+    this.beers = await this.getBeers(url);
+
+    this.sortBeers();
   }
 
   setSorting(key: string) {

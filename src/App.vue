@@ -6,7 +6,7 @@
       <router-view></router-view>
     </keep-alive>
 
-    <site-map :routes="routesList"></site-map>
+    <site-map></site-map>
   </div>
 </template>
 
@@ -19,16 +19,7 @@ import { RouteObject } from "@/types";
 @Component({
   components: { SiteMap, MainNav },
 })
-export default class App extends Vue {
-  private routesList!: RouteObject[];
-
-  private beforeCreate() {
-    // @ts-ignore: Property 'options' does not exist on type 'VueRouter'.
-    this.routesList = this.$router.options.routes.map(
-      (route: any): RouteObject => ({ name: route.name, path: route.path })
-    );
-  }
-}
+export default class App extends Vue {}
 </script>
 
 <style lang="scss">

@@ -1,23 +1,29 @@
 <template>
   <div>
-    <h1>This is a detail page {{id}}</h1>
-    {{beer.name}}
+    <h1>{{beer.name}}</h1>
+    <random-beer-button v-if="hasRandomId">Random Beer!</random-beer-button>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Watch, Prop, Vue } from "vue-property-decorator";
+import RandomBeerButton from "@/components/RandomBeerButton.vue";
 
-@Component
+@Component({
+  components: {
+    RandomBeerButton,
+  },
+})
 export default class Detail extends Vue {
   @Prop() id!: number;
-  @Prop() data!: object | null;
+  @Prop() data!: object | undefined;
+  @Prop({ default: false }) hasRandomId!: boolean;
 
   beer: object = {};
 
   @Watch("id", { immediate: true })
   async fn() {
-    if (this.data == null) {
+    if (this.data == undefined) {
       try {
         const response = await fetch(this.apiUrl);
 
@@ -25,6 +31,8 @@ export default class Detail extends Vue {
       } catch (error) {
         throw new Error("API call failed!");
       }
+    } else {
+      this.beer = this.data;
     }
   }
 

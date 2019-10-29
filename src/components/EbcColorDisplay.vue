@@ -4,14 +4,14 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import colorFromValue from "@/modules/color-scaler.ts";
+import colorScaler from "@/modules/color-scaler.ts";
 import ebcColorScheme from "@/assets/ebc-color-scheme.ts";
 
 @Component
 export default class EbcColorDisplay extends Vue {
   @Prop() ebc!: number;
 
-  getColorFromEbc: Function = colorFromValue(ebcColorScheme);
+  getColorFromEbc: Function = colorScaler(ebcColorScheme);
 }
 </script>
 

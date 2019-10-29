@@ -1,23 +1,19 @@
 <template>
   <nav>
     <router-link to="/">Home!</router-link>
-    <router-link to="/about">About</router-link>
-    <router-link
-      @click.native="randomBeer = newRandomBeer()"
-      :to="{name: 'detail', params: {id: randomBeer, data: null}}"
-    >Random</router-link>
+    <router-link to="/beers">Beers</router-link>
+    <random-beer-link>Random</random-beer-link>
   </nav>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import RandomBeerLink from "./RandomBeerLink.vue";
 
-@Component
-export default class MainNav extends Vue {
-  randomBeer: number = this.newRandomBeer();
-
-  newRandomBeer() {
-    return Math.floor(Math.random() * 325) + 1;
-  }
-}
+@Component({
+  components: {
+    RandomBeerLink,
+  },
+})
+export default class MainNav extends Vue {}
 </script>
