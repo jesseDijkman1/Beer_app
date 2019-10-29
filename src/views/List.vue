@@ -10,12 +10,12 @@
         >{{obj.name}}</router-link>
       </template>
     </sortable-table>
-    <footer-pagination :perPage="25" :totalEntries="325" :max="5"></footer-pagination>
+    <footer-pagination :currentPage="page" :perPage="25" :totalEntries="325" :maxLength="4"></footer-pagination>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Watch, Prop, Vue } from "vue-property-decorator";
 import SortableTable from "@/components/SortableTable.vue";
 import EbcColorDisplay from "@/components/EbcColorDisplay.vue";
 import FooterPagination from "@/components/FooterPagination.vue";
@@ -44,12 +44,17 @@ export default class List extends Vue {
     }
   }
 
-  async created() {
-    this.beers = await this.getBeers(this.url);
-  }
+  // async created() {
+  //   this.beers = await this.getBeers(this.url);
+  // }
 
   get url() {
     return `https://api.punkapi.com/v2/beers?page=${this.page}&per_page=${this.perPage}`;
+  }
+
+  @Watch("page", { immediate: true })
+  async fn() {
+    this.beers = await this.getBeers(this.url);
   }
 }
 </script>
