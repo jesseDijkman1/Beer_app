@@ -16,10 +16,19 @@ const routes = [
     component: () => import("../views/About.vue"),
   },
   {
+    path: "/beers",
+    name: "beers",
+    component: () => import("../views/List.vue")
+  },
+  {
     path: "/beers/:id",
     name: "detail",
     component: () => import("../views/Detail.vue"),
     props: true
+  },
+  {
+    path: "/random",
+    redirect: `/beers/${Math.floor(Math.random() * 325) + 1}`
   }
 ];
 
