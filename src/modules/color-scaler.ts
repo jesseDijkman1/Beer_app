@@ -27,9 +27,11 @@ function colorTransitionArray(array: ColorScheme[]): number[] {
   return colors[0].map((color: number, i: number): number => (color - colors[1][i]) / valueSpan)
 }
 
-export default function (value: number, schemes: ColorScheme[]): number[] {
-  const usableSchemes = filterScheme(value, schemes)
-  const transitionArray = colorTransitionArray(usableSchemes)
+export default function (schemes: ColorScheme[]): Function {
+  return function (value: number) {
+    const usableSchemes = filterScheme(value, schemes)
+    const transitionArray = colorTransitionArray(usableSchemes)
 
-  return usableSchemes[0].color.map((val, i) => val + (transitionArray[i] * (value - usableSchemes[0].value)))
-} 
+    return usableSchemes[0].color.map((val, i) => val + (transitionArray[i] * (value - usableSchemes[0].value)))
+  }
+}

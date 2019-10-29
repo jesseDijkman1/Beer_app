@@ -7,12 +7,7 @@
       :columns="['color', 'id', 'name', 'ebc']"
     >
       <template slot-scope="{column, obj}">
-        <div
-          v-if="column == 'color'"
-          class="color-display"
-          :style="{background: getColorFromEbc(obj.ebc)}"
-        ></div>
-
+        <ebc-color-display v-if="column == 'color'" :ebc="obj.ebc"></ebc-color-display>
         <router-link
           v-else-if="column == 'name'"
           :to="{name: 'detail', params: {id: obj.id, data: obj}}"
@@ -25,13 +20,12 @@
 <script lang="ts">
 import { Component, Watch, Vue } from "vue-property-decorator";
 import SortableTable from "@/components/SortableTable.vue";
-
-import colorFromValue from "@/modules/color-scaler.ts";
-import ebcColorScheme from "@/assets/ebc-color-scheme.ts";
+import EbcColorDisplay from "@/components/EbcColorDisplay.vue";
 
 @Component({
   components: {
     SortableTable,
+    EbcColorDisplay,
   },
 })
 export default class Home extends Vue {
@@ -86,17 +80,8 @@ export default class Home extends Vue {
       return 0;
     });
   }
-
-  getColorFromEbc(e: number) {
-    return `rgb(${colorFromValue(e, ebcColorScheme)})`;
-  }
 }
 </script>
 
 <style lang="scss" scoped>
-.color-display {
-  width: 30px;
-  height: 30px;
-  border-radius: 100px;
-}
 </style>
