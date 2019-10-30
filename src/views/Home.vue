@@ -1,32 +1,53 @@
 <template>
   <div>
-    <h1>Home</h1>
-    <sortable-table
-      v-on:sortTable="setSorting"
-      :data="beers"
-      :columns="['color', 'id', 'name', 'ebc']"
-    >
-      <template slot-scope="{column, obj}">
-        <ebc-color-display v-if="column == 'color'" :ebc="obj.ebc"></ebc-color-display>
-        <router-link
-          v-else-if="column == 'name'"
-          :to="{name: 'detail', params: {id: obj.id, data: obj}}"
-        >{{obj.name}}</router-link>
-      </template>
-    </sortable-table>
+    <text-heading size="large">For the alcoholics</text-heading>
+
+    <random-beer-button>Random Beer</random-beer-button>
+
+    <section>
+      <text-heading size="medium">Beers of the day</text-heading>
+
+      <articles-list>
+        <template v-for="beer in beers">
+          <beer-article-card
+            :key="beer.id"
+            :id="beer.id"
+            :name="beer.name"
+            :tagline="beer.tagline"
+            :alcohol="beer.abv"
+            :ebc="beer.ebc"
+            :ibu="beer.ibu"
+          ></beer-article-card>
+
+          <span :key="beer.id" class="list-seperator">
+            <span></span>
+            <span></span>
+          </span>
+        </template>
+      </articles-list>
+    </section>
+
+    <strong>
+      <router-link to="/beers/1">> See all beers</router-link>
+    </strong>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Watch, Vue } from "vue-property-decorator";
-import SortableTable from "@/components/SortableTable.vue";
-import EbcColorDisplay from "@/components/EbcColorDisplay.vue";
+// import SortableTable from "@/components/SortableTable.vue";
+
 import RandomBeerButton from "@/components/RandomBeerButton.vue";
+import TextHeading from "@/components/TextHeading.vue";
+import BeerArticleCard from "@/components/BeerArticleCard.vue";
+import ArticlesList from "@/components/ArticlesList.vue";
 
 @Component({
   components: {
-    SortableTable,
-    EbcColorDisplay,
+    BeerArticleCard,
+    RandomBeerButton,
+    TextHeading,
+    ArticlesList,
   },
 })
 export default class Home extends Vue {
@@ -89,4 +110,37 @@ export default class Home extends Vue {
 </script>
 
 <style lang="scss" scoped>
+h1 {
+  color: white;
+}
+
+.grid-home {
+  border: solid 1px red;
+}
+
+strong {
+  color: var(--color-main);
+}
+
+.list-seperator {
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 2em;
+  height: 1px;
+  width: 50%;
+  opacity: 0.5;
+
+  &:nth-of-type(odd) {
+    transform: scaleX(-1); // Flip horizontally
+  }
+
+  span {
+    &:nth-child(odd) {
+      background: white;
+    }
+    &:nth-child(even) {
+      background: var(--color-main);
+    }
+  }
+}
 </style>

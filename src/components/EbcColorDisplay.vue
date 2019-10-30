@@ -17,8 +17,10 @@ export default class EbcColorDisplay extends Vue {
 
 <style lang="scss" scoped>
 .color-display {
-  width: 30px;
-  height: 30px;
-  border-radius: 100px;
+  width: 20px;
+  height: 20px;
+  transform: rotate(45deg);
+  position: relative;
+  border: solid 2px rgba(255, 255, 255, 1);
 }
 </style>

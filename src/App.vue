@@ -3,7 +3,7 @@
     <main-nav></main-nav>
 
     <keep-alive include="Home">
-      <router-view></router-view>
+      <router-view class="main-grid"></router-view>
     </keep-alive>
 
     <site-map></site-map>
@@ -24,15 +24,42 @@ export default class App extends Vue {}
 
 <style lang="scss">
 :root {
-  --main-color: #ffb800;
+  --color-main: #ffb800;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Avenir next", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: black;
+  color: white;
 }
 
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  padding-top: 60px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+li {
+  list-style-type: none;
+}
+
+strong {
+  font-size: 22px;
+}
+
+.main-grid {
+  max-width: 960px;
+  margin: 0 auto;
 }
 </style>

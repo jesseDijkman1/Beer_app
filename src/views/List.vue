@@ -10,7 +10,13 @@
         >{{obj.name}}</router-link>
       </template>
     </sortable-table>
-    <footer-pagination :currentPage="page" :perPage="25" :totalEntries="325" :maxLength="4"></footer-pagination>
+    <footer-pagination
+      url="/beers/"
+      :currentPage="page"
+      :perPage="25"
+      :totalEntries="325"
+      :maxLength="8"
+    ></footer-pagination>
   </div>
 </template>
 
@@ -44,16 +50,13 @@ export default class List extends Vue {
     }
   }
 
-  // async created() {
-  //   this.beers = await this.getBeers(this.url);
-  // }
-
   get url() {
     return `https://api.punkapi.com/v2/beers?page=${this.page}&per_page=${this.perPage}`;
   }
 
   @Watch("page", { immediate: true })
   async fn() {
+    // Maybe should store the data somewhere else, like localstorage
     this.beers = await this.getBeers(this.url);
   }
 }

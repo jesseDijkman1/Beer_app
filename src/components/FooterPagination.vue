@@ -2,7 +2,7 @@
   <footer>
     <ol>
       <li :key="n" v-for="n in pages">
-        <router-link :to="'/beers/' + n">{{n}}</router-link>
+        <router-link :class="{'is-active': n == currentPage}" :to="url + n">{{n}}</router-link>
       </li>
     </ol>
   </footer>
@@ -13,6 +13,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class FooterPagination extends Vue {
+  @Prop() url!: string;
   @Prop() currentPage!: string;
   @Prop() perPage!: number;
   @Prop() totalEntries!: number;

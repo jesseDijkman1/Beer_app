@@ -3,6 +3,7 @@
     <thead>
       <tr class="sortable-table__row">
         <th
+          :style="{'grid-template-columns': gridColumns}"
           class="sortable-table__heading sortable-table__cell"
           @click="$emit('sortTable', col)"
           :key="col"
@@ -30,6 +31,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 export default class SortingTable extends Vue {
   @Prop() data!: object[];
   @Prop() columns!: string[];
+  @Prop() gridColumns!: string;
 }
 </script>
 
@@ -51,7 +53,6 @@ export default class SortingTable extends Vue {
 
   &__row {
     display: grid;
-    grid-template-columns: 1fr repeat(2, 3fr);
     width: 100%;
 
     &:not(:last-of-type) {

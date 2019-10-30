@@ -15,7 +15,7 @@ import RandomBeerButton from "@/components/RandomBeerButton.vue";
   },
 })
 export default class Detail extends Vue {
-  @Prop() id!: number;
+  @Prop() id!: number | boolean;
   @Prop() data!: object | undefined;
   @Prop({ default: false }) hasRandomId!: boolean;
 
