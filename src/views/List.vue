@@ -1,15 +1,25 @@
 <template>
   <div>
     <h1>All Beers</h1>
-    <sortable-table :data="beers" :columns="['color', 'id', 'name', 'ebc']">
-      <template slot-scope="{column, obj}">
-        <ebc-color-display v-if="column == 'color'" :ebc="obj.ebc"></ebc-color-display>
-        <router-link
-          v-else-if="column == 'name'"
-          :to="{name: 'detail', params: {id: obj.id, data: obj}}"
-        >{{obj.name}}</router-link>
+    <search-bar @search="search" :autoSearch="true" :delay="1500" placeholder="ok than"></search-bar>
+    <grid-list>
+      <template v-for="beer in beers">
+        <beer-article-card
+          :key="beer.id"
+          :id="beer.id"
+          :name="beer.name"
+          :tagline="beer.tagline"
+          :alcohol="beer.abv"
+          :ebc="beer.ebc"
+          :ibu="beer.ibu"
+        ></beer-article-card>
+
+        <span :key="'ignore' + beer.id" class="list-seperator">
+          <span></span>
+          <span></span>
+        </span>
       </template>
-    </sortable-table>
+    </grid-list>
     <footer-pagination
       url="/beers/"
       :currentPage="page"
@@ -22,15 +32,20 @@
 
 <script lang="ts">
 import { Component, Watch, Prop, Vue } from "vue-property-decorator";
-import SortableTable from "@/components/SortableTable.vue";
-import EbcColorDisplay from "@/components/EbcColorDisplay.vue";
+import BeerArticleCard from "@/components/BeerArticleCard.vue";
+import GridList from "@/components/GridList.vue";
+// import EbcColorDisplay from "@/components/EbcColorDisplay.vue";
+import SearchBar from "@/components/SearchBar.vue";
 import FooterPagination from "@/components/FooterPagination.vue";
 
 @Component({
   components: {
-    SortableTable,
-    EbcColorDisplay,
+    // SortableTable,
+    // EbcColorDisplay,
     FooterPagination,
+    BeerArticleCard,
+    GridList,
+    SearchBar,
   },
 })
 export default class List extends Vue {
