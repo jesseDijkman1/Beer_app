@@ -12,6 +12,7 @@
           :alcohol="beer.abv"
           :ebc="beer.ebc"
           :ibu="beer.ibu"
+          @click.native="$router.push({name:'detail', params:{'id': beer.id}})"
         ></beer-article-card>
 
         <span :key="'ignore' + beer.id" class="list-seperator">
@@ -76,7 +77,7 @@ export default class List extends Vue {
       this.isSearched = false;
       this.beers = await this.getBeers(this.url);
     } else if (value) {
-      const url = `https://api.punkapi.com/v2/beers?beer_name=${value}`;
+      const url = `https://api.punkapi.com/v2/beers?beer_name=${value}&per_page=80`;
 
       this.isSearched = true;
       this.beers = await this.getBeers(url);

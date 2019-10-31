@@ -1,31 +1,42 @@
 <template>
-  <div>
-    <text-heading size="large">For the alcoholics</text-heading>
+  <div class="main-grid">
+    <div class="grid-width" :style="{background: 'red'}">
+      <section-heading :style="{margin: '20vh 0 1em 0'}" size="large">For the alcoholics</section-heading>
 
-    <random-beer-button>Random Beer</random-beer-button>
+      <random-beer-button>Random Beer</random-beer-button>
+    </div>
 
-    <section>
-      <text-heading size="medium">Beers of the day</text-heading>
+    <section-heading
+      :style="{margin: '30vh 0 2em 0', textAlign: 'center'}"
+      size="medium"
+    >Beers of the day</section-heading>
 
-      <articles-list>
-        <template v-for="beer in beers">
-          <beer-article-card
-            :key="beer.id"
-            :id="beer.id"
-            :name="beer.name"
-            :tagline="beer.tagline"
-            :alcohol="beer.abv"
-            :ebc="beer.ebc"
-            :ibu="beer.ibu"
-          ></beer-article-card>
+    <sorting-handler
+      @sortBy="setSorting"
+      :options="['name', 'ebc', 'ibu', 'abv']"
+      class="grid-width"
+      :style="{alignSelf: 'flex-end'}"
+    >Sort</sorting-handler>
 
-          <span :key="beer.id" class="list-seperator">
-            <span></span>
-            <span></span>
-          </span>
-        </template>
-      </articles-list>
-    </section>
+    <grid-list>
+      <template v-for="beer in beers">
+        <beer-article-card
+          :key="beer.id"
+          :id="beer.id"
+          :name="beer.name"
+          :tagline="beer.tagline"
+          :alcohol="beer.abv"
+          :ebc="beer.ebc"
+          :ibu="beer.ibu"
+          @click.native="$router.push({name:'detail', params:{'id': beer.id}})"
+        ></beer-article-card>
+
+        <span :key="'seperator' + beer.id" class="list-seperator">
+          <span></span>
+          <span></span>
+        </span>
+      </template>
+    </grid-list>
 
     <strong>
       <router-link to="/beers/1">> See all beers</router-link>
@@ -35,19 +46,22 @@
 
 <script lang="ts">
 import { Component, Watch, Vue } from "vue-property-decorator";
-// import SortableTable from "@/components/SortableTable.vue";
 
 import RandomBeerButton from "@/components/RandomBeerButton.vue";
-import TextHeading from "@/components/TextHeading.vue";
+import SectionHeading from "@/components/SectionHeading.vue";
 import BeerArticleCard from "@/components/BeerArticleCard.vue";
-import ArticlesList from "@/components/ArticlesList.vue";
+import GridList from "@/components/GridList.vue";
+import SearchBar from "@/components/SearchBar.vue";
+import SortingHandler from "@/components/SortingHandler.vue";
 
 @Component({
   components: {
     BeerArticleCard,
     RandomBeerButton,
-    TextHeading,
-    ArticlesList,
+    SectionHeading,
+    GridList,
+    SortingHandler,
+    SearchBar,
   },
 })
 export default class Home extends Vue {
@@ -106,6 +120,12 @@ export default class Home extends Vue {
       return 0;
     });
   }
+
+  search(value: string) {
+    if (!value) {
+      console.log("Reset");
+    }
+  }
 }
 </script>
 
@@ -130,6 +150,10 @@ strong {
   width: 50%;
   opacity: 0.5;
 
+  &:last-of-type {
+    display: none;
+  }
+
   &:nth-of-type(odd) {
     transform: scaleX(-1); // Flip horizontally
   }
@@ -142,5 +166,14 @@ strong {
       background: var(--color-main);
     }
   }
+}
+
+.flex-wrapper--column {
+  display: flex;
+  flex-direction: column;
+}
+
+.list-controls {
+  background: blue;
 }
 </style>
