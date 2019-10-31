@@ -1,7 +1,6 @@
 <template>
   <article class="beer-article">
-    <span class="beer-article__color"></span>
-
+    <ebc-color-display :ebc="ebc" class="beer-article__color"></ebc-color-display>
     <div class="flex-wrapper--column">
       <header class="beer-article__header">
         <h1 class="beer-article__title">{{name}}</h1>
@@ -54,14 +53,19 @@ export default class BeerArticleCard extends Vue {
   min-height: 10em;
   height: auto;
   width: 100%;
+  overflow: hidden;
+  transition: all 0.2s linear;
 
   &__color {
-    width: 1em;
+    width: 10%;
+    max-width: 5em;
+    min-width: 3em;
     align-self: stretch;
-    background: white;
-    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-    transition: all 0.2s linear;
+    transition: inherit;
     margin-right: 5%;
+    background-image: url("https://media.mnn.com/assets/images/2016/02/sparking-water.jpg.653x0_q80_crop-smart.jpg");
+    background-blend-mode: multiply;
+    background-size: cover;
   }
 
   &__header {
@@ -73,20 +77,27 @@ export default class BeerArticleCard extends Vue {
     font-family: Calibri, Arial, sans-serif;
     font-size: 3rem;
     transition: all 0.2s linear;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 80vw;
+    overflow: hidden;
   }
 
   &__tagline {
     font-size: 1.25rem;
+    display: flex;
+    max-width: 80vw;
   }
   &__footer {
     display: flex;
+    overflow-x: scroll;
 
     dl {
       display: flex;
       align-items: flex-end;
 
       &:not(:first-of-type) {
-        margin-left: 3em;
+        margin-left: 10%;
       }
 
       dt {
@@ -110,8 +121,7 @@ export default class BeerArticleCard extends Vue {
   }
 
   &:hover &__color {
-    clip-path: polygon(0% 0%, 100% 0%, 0% 100%, 100% 100%);
-    background: white;
+    background-color: white !important;
   }
 
   &:hover &__title {
@@ -123,6 +133,7 @@ export default class BeerArticleCard extends Vue {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 100%;
 }
 
 .percentage-symbol {
