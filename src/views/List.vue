@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main-grid">
     <h1>All Beers</h1>
     <search-bar @search="search" :autoSearch="true" :delay="500" placeholder="Search beer ..."></search-bar>
     <grid-list>
@@ -68,14 +68,18 @@ export default class List extends Vue {
   }
 
   async search(value: string) {
+    /**
+     * Weird Bug:
+     * When deleting the input value at the same time it starts searching can get you stuck*/
+
     if (!value && this.isSearched) {
       this.isSearched = false;
       this.beers = await this.getBeers(this.url);
     } else if (value) {
       const url = `https://api.punkapi.com/v2/beers?beer_name=${value}`;
 
-      this.beers = await this.getBeers(url);
       this.isSearched = true;
+      this.beers = await this.getBeers(url);
     }
   }
 
