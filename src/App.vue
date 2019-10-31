@@ -3,7 +3,7 @@
     <main-nav></main-nav>
 
     <keep-alive include="Home">
-      <router-view class="main-grid"></router-view>
+      <router-view></router-view>
     </keep-alive>
 
     <site-map></site-map>
@@ -59,7 +59,25 @@ strong {
 }
 
 .main-grid {
-  max-width: 960px;
-  margin: 0 auto;
+  $sideWidth: calc(10vw - 5vmin);
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax($sideWidth, auto) minmax(auto, 960px) minmax(
+      $sideWidth,
+      auto
+    );
+}
+
+.main-grid > * {
+  grid-column: 2 / 3;
+  min-width: 0;
+}
+
+.full-width {
+  grid-column: 1 / 4;
+}
+
+.grid-width {
+  grid-column: 2 / 3;
 }
 </style>
