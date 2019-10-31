@@ -14,10 +14,6 @@ export default class SearchBar extends Vue {
   value: string = "";
   timeout: any;
 
-  created() {
-    console.log(this.autoSearch, this.delay);
-  }
-
   @Watch("value")
   fn() {
     // Debounce
@@ -37,6 +33,24 @@ export default class SearchBar extends Vue {
 
 <style lang="scss" scoped>
 .search-bar {
+  border: none;
+  font: inherit;
+  outline: none;
+  color: white;
+  background: none;
   border-bottom: solid 2px var(--color-main);
+  margin-bottom: 2em;
+  padding: 0.5em 5%;
+  font-size: 1.25em;
+
+  &::placeholder {
+    color: inherit;
+  }
+  &:-ms-input-placeholder {
+    color: inherit;
+  }
+  &::-ms-input-placeholder {
+    color: inherit;
+  }
 }
 </style>
