@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>All Beers</h1>
-    <search-bar @search="search" :autoSearch="true" :delay="1500" placeholder="ok than"></search-bar>
+    <search-bar @search="search" :autoSearch="true" :delay="500" placeholder="Search beer ..."></search-bar>
     <grid-list>
       <template v-for="beer in beers">
         <beer-article-card
@@ -21,6 +21,7 @@
       </template>
     </grid-list>
     <footer-pagination
+      v-if="isSearched == false"
       url="/beers/"
       :currentPage="page"
       :perPage="25"
@@ -34,14 +35,11 @@
 import { Component, Watch, Prop, Vue } from "vue-property-decorator";
 import BeerArticleCard from "@/components/BeerArticleCard.vue";
 import GridList from "@/components/GridList.vue";
-// import EbcColorDisplay from "@/components/EbcColorDisplay.vue";
 import SearchBar from "@/components/SearchBar.vue";
 import FooterPagination from "@/components/FooterPagination.vue";
 
 @Component({
   components: {
-    // SortableTable,
-    // EbcColorDisplay,
     FooterPagination,
     BeerArticleCard,
     GridList,
@@ -49,11 +47,11 @@ import FooterPagination from "@/components/FooterPagination.vue";
   },
 })
 export default class List extends Vue {
-  perPage: number = 25;
-
-  beers: object[] = [];
-
   @Prop({ default: 1 }) page!: number;
+
+  perPage: number = 25;
+  beers: object[] = [];
+  isSearched: boolean = false;
 
   async getBeers(url: string) {
     try {
@@ -67,6 +65,18 @@ export default class List extends Vue {
 
   get url() {
     return `https://api.punkapi.com/v2/beers?page=${this.page}&per_page=${this.perPage}`;
+  }
+
+  async search(value: string) {
+    if (!value && this.isSearched) {
+      this.isSearched = false;
+      this.beers = await this.getBeers(this.url);
+    } else if (value) {
+      const url = `https://api.punkapi.com/v2/beers?beer_name=${value}`;
+
+      this.beers = await this.getBeers(url);
+      this.isSearched = true;
+    }
   }
 
   @Watch("page", { immediate: true })

@@ -23,11 +23,14 @@ export default class SearchBar extends Vue {
     // Debounce
     clearTimeout(this.timeout);
 
-    this.timeout = setTimeout(() => {
-      if (this.value) {
+    if (!this.value) {
+      // If the input is empty emit immediately
+      this.$emit("search", this.value);
+    } else {
+      this.timeout = setTimeout(() => {
         this.$emit("search", this.value);
-      }
-    }, this.delay);
+      }, this.delay);
+    }
   }
 }
 </script>
