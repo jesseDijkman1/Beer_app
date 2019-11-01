@@ -12,16 +12,19 @@ export default class SearchBar extends Vue {
   @Prop() delay!: number;
 
   value: string = "";
+  lastValue: string = "";
   timeout: any;
 
   @Watch("value")
   fn() {
-    // Debounce
+    if (!this.autoSearch) {
+      return;
+    }
+
     clearTimeout(this.timeout);
 
     if (!this.value) {
-      // If the input is empty emit immediately
-      this.$emit("search", this.value);
+      this.$emit("reset");
     } else {
       this.timeout = setTimeout(() => {
         this.$emit("search", this.value);
@@ -34,6 +37,7 @@ export default class SearchBar extends Vue {
 <style lang="scss" scoped>
 .search-bar {
   border: none;
+  width: 100%;
   font: inherit;
   outline: none;
   color: white;

@@ -1,15 +1,34 @@
 <template>
   <div class="main-grid">
-    <h1>All Beers</h1>
-    <search-bar @search="search" :autoSearch="true" :delay="500" placeholder="Search beer ..."></search-bar>
-    <grid-list>
+    <main-heading>All beers</main-heading>
+    <search-bar
+      @search="search"
+      @reset="reset"
+      :searching="loading"
+      :autoSearch="true"
+      :delay="500"
+      placeholder="Search beer ..."
+    ></search-bar>
+
+    <sorting-handler
+      @sortBy="setSorting"
+      :options="['name', 'ebc', 'ibu', 'abv']"
+      class="grid-width"
+      :style="{alignSelf: 'flex-end'}"
+    >Sort</sorting-handler>
+
+    <circle-loader v-show="loading"></circle-loader>
+
+    <h1 class="search-result--empty" v-if="!loading && beers.length == 0">No beers found</h1>
+
+    <grid-list v-show="!loading">
       <template v-for="beer in beers">
         <beer-article-card
           :key="beer.id"
           :id="beer.id"
           :name="beer.name"
           :tagline="beer.tagline"
-          :alcohol="beer.abv"
+          :abv="beer.abv"
           :ebc="beer.ebc"
           :ibu="beer.ibu"
           @click.native="$router.push({name:'detail', params:{'id': beer.id}})"
@@ -27,7 +46,7 @@
       :currentPage="page"
       :perPage="25"
       :totalEntries="325"
-      :maxLength="8"
+      :maxLength="5"
     ></footer-pagination>
   </div>
 </template>
@@ -38,6 +57,9 @@ import BeerArticleCard from "@/components/BeerArticleCard.vue";
 import GridList from "@/components/GridList.vue";
 import SearchBar from "@/components/SearchBar.vue";
 import FooterPagination from "@/components/FooterPagination.vue";
+import CircleLoader from "@/components/CircleLoader.vue";
+import SortingHandler from "@/components/SortingHandler.vue";
+import MainHeading from "@/components/MainHeading.vue";
 
 @Component({
   components: {
@@ -45,6 +67,9 @@ import FooterPagination from "@/components/FooterPagination.vue";
     BeerArticleCard,
     GridList,
     SearchBar,
+    CircleLoader,
+    SortingHandler,
+    MainHeading,
   },
 })
 export default class List extends Vue {
@@ -53,6 +78,12 @@ export default class List extends Vue {
   perPage: number = 25;
   beers: object[] = [];
   isSearched: boolean = false;
+  loading: boolean = false;
+
+  sortingKey: string = "id";
+  ascending: boolean = true;
+
+  blockReset: boolean = false;
 
   async getBeers(url: string) {
     try {
@@ -68,19 +99,29 @@ export default class List extends Vue {
     return `https://api.punkapi.com/v2/beers?page=${this.page}&per_page=${this.perPage}`;
   }
 
-  async search(value: string) {
-    /**
-     * Weird Bug:
-     * When deleting the input value at the same time it starts searching can get you stuck*/
+  async reset() {
+    this.loading = true;
 
-    if (!value && this.isSearched) {
-      this.isSearched = false;
+    if (!this.blockReset) {
+      this.blockReset = true;
+
       this.beers = await this.getBeers(this.url);
-    } else if (value) {
+    }
+
+    this.loading = false;
+  }
+
+  async search(value: string) {
+    this.blockReset = false;
+
+    if (value) {
       const url = `https://api.punkapi.com/v2/beers?beer_name=${value}&per_page=80`;
 
-      this.isSearched = true;
+      this.loading = true;
+
       this.beers = await this.getBeers(url);
+
+      this.loading = false;
     }
   }
 
@@ -89,8 +130,46 @@ export default class List extends Vue {
     // Maybe should store the data somewhere else, like localstorage
     this.beers = await this.getBeers(this.url);
   }
+
+  setSorting(key: string) {
+    if (key === this.sortingKey) {
+      this.ascending = !this.ascending;
+    } else {
+      this.ascending = true;
+      this.sortingKey = key;
+    }
+  }
+
+  // Watch two values at once (seems to work)
+  @Watch("sortingKey")
+  @Watch("ascending")
+  fn2() {
+    this.sortBeers();
+  }
+
+  sortBeers() {
+    this.beers.sort((_a: any, _b: any) => {
+      let b: string | number = _b[this.sortingKey];
+      let a: string | number = _a[this.sortingKey];
+
+      if (a > b) {
+        return this.ascending ? 1 : -1;
+      }
+
+      if (b > a) {
+        return this.ascending ? -1 : 1;
+      }
+
+      return 0;
+    });
+  }
 }
 </script>
 
 <style lang="scss" scoped>
+.search-result--empty {
+  font-size: calc(40px + (100 - 40) * ((100vw - 300px) / (1600 - 300)));
+  text-align: center;
+  opacity: 0.5;
+}
 </style>
