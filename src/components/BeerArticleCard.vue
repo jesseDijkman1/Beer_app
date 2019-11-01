@@ -3,26 +3,14 @@
     <ebc-color-display :ebc="ebc" class="beer-article__color"></ebc-color-display>
     <div class="flex-wrapper--column">
       <header class="beer-article__header">
-        <h1 class="beer-article__title">{{name}}</h1>
+        <h1 class="beer-article__title">{{name }}</h1>
         <p class="beer-article__tagline">{{tagline}}</p>
       </header>
 
       <footer class="beer-article__footer">
-        <dl>
-          <dt>ALC</dt>
-          <dd>
-            {{alcohol}}
-            <span class="percentage-symbol">%</span>
-          </dd>
-        </dl>
-        <dl>
-          <dt>IBU</dt>
-          <dd>{{ibu}}</dd>
-        </dl>
-        <dl>
-          <dt>EBC</dt>
-          <dd>{{ebc}}</dd>
-        </dl>
+        <data-item name="ABV" :value="abv" unit="percentage" />
+        <data-item name="IBU" :value="ibu" />
+        <data-item name="EBC" :value="ebc" />
       </footer>
     </div>
   </article>
@@ -31,17 +19,19 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import EbcColorDisplay from "@/components/EbcColorDisplay.vue";
+import DataItem from "@/components/DataItem.vue";
 
 @Component({
   components: {
     EbcColorDisplay,
+    DataItem,
   },
 })
 export default class BeerArticleCard extends Vue {
   @Prop() id!: number;
-  @Prop({ default: "" }) name!: string;
-  @Prop({ default: "" }) tagline!: string;
-  @Prop() alcohol!: number;
+  @Prop({ default: "?" }) name!: string;
+  @Prop() tagline!: string;
+  @Prop() abv!: number;
   @Prop() ebc!: number;
   @Prop() ibu!: number;
 }
@@ -92,27 +82,27 @@ export default class BeerArticleCard extends Vue {
     display: flex;
     overflow-x: scroll;
 
-    dl {
-      display: flex;
-      align-items: flex-end;
+    // dl {
+    //   display: flex;
+    //   align-items: flex-end;
 
-      &:not(:first-of-type) {
-        margin-left: 10%;
-      }
+    //   &:not(:first-of-type) {
+    //     margin-left: 10%;
+    //   }
 
-      dt {
-        color: var(--color-main);
-        font-family: Calibri, Arial, sans-serif;
-        font-weight: bold;
-        margin-right: 0.25em;
-      }
+    //   dt {
+    //     color: var(--color-main);
+    //     font-family: Calibri, Arial, sans-serif;
+    //     font-weight: bold;
+    //     margin-right: 0.25em;
+    //   }
 
-      dd {
-        font-weight: bold;
-        font-size: 2.625em;
-        display: flex;
-      }
-    }
+    //   dd {
+    //     font-weight: bold;
+    //     font-size: 2.625em;
+    //     display: flex;
+    //   }
+    // }
   }
 
   // Hovers
