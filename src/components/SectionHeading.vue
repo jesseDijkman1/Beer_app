@@ -1,42 +1,23 @@
 <template>
-  <h1 v-if="size === 'large'" class="heading heading--large">
-    <slot></slot>
-  </h1>
-  <h2 v-else-if="size === 'medium'" class="heading heading--medium">
+  <h2 class="section-heading">
     <slot></slot>
   </h2>
-  <h3 v-else-if="size == 'small'" class="heading heading--small">
-    <slot></slot>
-  </h3>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-
-type sizes = "large" | "medium" | "small";
+import { Component, Vue } from "vue-property-decorator";
 
 @Component
-export default class SectionHeading extends Vue {
-  @Prop({ default: "large" }) size!: sizes;
-}
+export default class extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-.heading {
+.section-heading {
   color: white;
-
-  &--large {
-    font-size: 42px;
-    font-weight: normal;
-  }
-
-  &--medium {
-    font-size: 32px;
-    font-weight: 600;
-  }
-
-  &--small {
-    font-size: 24px;
-  }
+  font-family: Calibri, Arial, sans-serif;
+  font-size: 2.25rem;
+  text-align: center;
+  padding-bottom: 0.25em;
+  border-bottom: solid 2px var(--color-main);
 }
 </style>
