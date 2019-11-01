@@ -1,11 +1,9 @@
 <template>
   <article class="beer-article">
     <ebc-color-display :ebc="ebc" class="beer-article__color"></ebc-color-display>
+
     <div class="flex-wrapper--column">
-      <header class="beer-article__header">
-        <h1 class="beer-article__title">{{name }}</h1>
-        <p class="beer-article__tagline">{{tagline}}</p>
-      </header>
+      <beer-article-header :title="name" :tagline="tagline" />
 
       <footer class="beer-article__footer">
         <data-item name="ABV" :value="abv" unit="percentage" />
@@ -20,11 +18,13 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import EbcColorDisplay from "@/components/EbcColorDisplay.vue";
 import DataItem from "@/components/DataItem.vue";
+import BeerArticleHeader from "@/components/BeerArticleHeader.vue";
 
 @Component({
   components: {
     EbcColorDisplay,
     DataItem,
+    BeerArticleHeader,
   },
 })
 export default class BeerArticleCard extends Vue {
@@ -62,47 +62,25 @@ export default class BeerArticleCard extends Vue {
     margin-bottom: 2em;
   }
 
-  &__title {
-    color: var(--color-main);
-    font-family: Calibri, Arial, sans-serif;
-    font-size: 3rem;
-    transition: all 0.2s linear;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    max-width: 80vw;
-    overflow: hidden;
-  }
+  // &__title {
+  //   color: var(--color-main);
+  //   font-family: Calibri, Arial, sans-serif;
+  //   font-size: 3rem;
+  //   transition: all 0.2s linear;
+  //   white-space: nowrap;
+  //   text-overflow: ellipsis;
+  //   max-width: 80vw;
+  //   overflow: hidden;
+  // }
 
-  &__tagline {
-    font-size: 1.25rem;
-    display: flex;
-    max-width: 80vw;
-  }
+  // &__tagline {
+  //   font-size: 1.25rem;
+  //   display: flex;
+  //   max-width: 80vw;
+  // }
   &__footer {
     display: flex;
     overflow-x: scroll;
-
-    // dl {
-    //   display: flex;
-    //   align-items: flex-end;
-
-    //   &:not(:first-of-type) {
-    //     margin-left: 10%;
-    //   }
-
-    //   dt {
-    //     color: var(--color-main);
-    //     font-family: Calibri, Arial, sans-serif;
-    //     font-weight: bold;
-    //     margin-right: 0.25em;
-    //   }
-
-    //   dd {
-    //     font-weight: bold;
-    //     font-size: 2.625em;
-    //     display: flex;
-    //   }
-    // }
   }
 
   // Hovers
