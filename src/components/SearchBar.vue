@@ -1,5 +1,13 @@
 <template>
-  <input v-model="value" class="search-bar" type="text" :placeholder="placeholder" />
+  <div class="search-bar">
+    <input
+      v-model="value"
+      class="search-bar__input font-regular"
+      type="text"
+      :placeholder="placeholder"
+    />
+    <span class="search-bar__border-bottom"></span>
+  </div>
 </template>
 
 <script lang="ts">
@@ -35,26 +43,49 @@ export default class SearchBar extends Vue {
 </script>
 
 <style lang="scss" scoped>
-// .search-bar {
-//   border: none;
-//   width: 100%;
-//   font: inherit;
-//   outline: none;
-//   color: white;
-//   background: none;
-//   border-bottom: solid 2px var(--color-main);
-//   margin-bottom: 2em;
-//   padding: 0.5em 5%;
-//   font-size: 1.25em;
+.search-bar {
+  padding: 1em;
+  margin-bottom: 1em;
+  position: relative;
 
-//   &::placeholder {
-//     color: inherit;
-//   }
-//   &:-ms-input-placeholder {
-//     color: inherit;
-//   }
-//   &::-ms-input-placeholder {
-//     color: inherit;
-//   }
-// }
+  &__border-bottom {
+    width: 100%;
+    height: 2px;
+    left: 0;
+    bottom: 0;
+    position: absolute;
+    background: var(--color-main);
+
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 0%;
+      height: 100%;
+      background: white;
+      left: 0;
+      top: 0;
+      transition: all 0.2s ease;
+    }
+  }
+
+  &__input {
+    color: #888;
+    transition: all 0.2s ease;
+
+    &::placeholder {
+      color: #888;
+      transition: all 0.2s ease;
+    }
+
+    &:focus,
+    &:focus::placeholder {
+      color: white;
+    }
+  }
+
+  &__input:focus + &__border-bottom::after {
+    width: 100%;
+  }
+}
 </style>
