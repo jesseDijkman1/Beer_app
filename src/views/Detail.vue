@@ -1,29 +1,18 @@
 <template>
-  <div class="main-grid">
+  <div>
     <random-beer-button v-if="hasRandomId">Random Beer!</random-beer-button>
 
     <beer-article-header :title="beer.name" :tagline="beer.tagline" />
 
-    <div class="inner-grid">
-      <p class="beer-description">{{beer.description}}</p>
+    <p class="beer-description">{{beer.description}}</p>
 
-      <div class="flexbox-grid">
-        <data-item name="ABV" :value="beer.abv" />
-        <data-item name="IBU" :value="beer.ibu" />
-        <data-item name="EBC" :value="beer.ebc" />
-        <data-item name="FG" :value="beer.target_fg" />
-        <data-item name="OG" :value="beer.target_og" />
-        <data-item name="SRM" :value="beer.srm" />
-        <data-item name="PH" :value="beer.ph" />
-      </div>
-    </div>
-
-    <section class="section--method full-width main-grid">
-      <section-heading>Method</section-heading>
-      <div clas="auto-columns">
-        <beer-method-card />
-      </div>
-    </section>
+    <data-item name="ABV" :value="beer.abv" />
+    <data-item name="IBU" :value="beer.ibu" />
+    <data-item name="EBC" :value="beer.ebc" />
+    <data-item name="FG" :value="beer.target_fg" />
+    <data-item name="OG" :value="beer.target_og" />
+    <data-item name="SRM" :value="beer.srm" />
+    <data-item name="PH" :value="beer.ph" />
   </div>
 </template>
 
