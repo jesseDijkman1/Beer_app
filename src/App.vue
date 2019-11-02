@@ -66,6 +66,12 @@ li {
 
 button {
   outline: none;
+  border: none;
+  background: none;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 // Button styling
