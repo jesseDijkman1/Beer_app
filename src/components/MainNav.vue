@@ -8,10 +8,10 @@
       </button>
 
       <ul class="main-nav__list">
-        <li class="main-nav__item font-medium">
+        <li class="main-nav__item font-medium" :class="{'is-active': currentRoute == 'home'}">
           <router-link to="/">Home</router-link>
         </li>
-        <li class="main-nav__item font-medium">
+        <li class="main-nav__item font-medium" :class="{'is-active': currentRoute == 'beers'}">
           <router-link to="/beers">Beers</router-link>
         </li>
         <li class="main-nav__item font-medium">
@@ -32,11 +32,17 @@ import RandomBeerLink from "./RandomBeerLink.vue";
   },
 })
 export default class MainNav extends Vue {
-  currentRoute!: string;
+  currentRoute: string = "";
   isOpen: boolean = false;
 
+  created() {
+    this.currentRoute = this.$router.currentRoute.name || "";
+  }
+
   @Watch("$route")
-  fn() {}
+  fn() {
+    this.currentRoute = this.$router.currentRoute.name || "";
+  }
 }
 </script>
 
@@ -97,6 +103,11 @@ export default class MainNav extends Vue {
     color: var(--color-main);
     font-family: Calibri, Arial, sans-serif;
     font-weight: bold;
+    transition: all 1s ease;
+
+    &.is-active {
+      color: white;
+    }
   }
 }
 

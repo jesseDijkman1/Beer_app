@@ -17,12 +17,12 @@ const routes = [
   },
   {
     path: "/beers/:page",
+    name: "beers",
     component: () => import("@/views/List.vue"),
     props: true
   },
   {
     path: "/beers",
-    name: "beers",
     redirect: "/beers/1"
   },
   {
