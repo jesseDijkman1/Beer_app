@@ -2,8 +2,11 @@
   <article class="beer-article">
     <ebc-color-display :ebc="ebc" class="beer-article__color"></ebc-color-display>
 
-    <div class="flex-wrapper--column">
-      <beer-article-header :title="name" :tagline="tagline" />
+    <div class="beer-article__container">
+      <header class="beer-article_header">
+        <h1 class="beer-article__title font-large">{{name}}</h1>
+        <p class="beer-article__tagline font-regular">{{tagline}}</p>
+      </header>
 
       <footer class="beer-article__footer">
         <data-item name="ABV" :value="abv" />
@@ -18,13 +21,11 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import EbcColorDisplay from "@/components/EbcColorDisplay.vue";
 import DataItem from "@/components/DataItem.vue";
-import BeerArticleHeader from "@/components/BeerArticleHeader.vue";
 
 @Component({
   components: {
     EbcColorDisplay,
     DataItem,
-    BeerArticleHeader,
   },
 })
 export default class BeerArticleCard extends Vue {
@@ -38,6 +39,55 @@ export default class BeerArticleCard extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.beer-article {
+  display: flex;
+  width: 100%;
+
+  &__container {
+    width: 100%;
+  }
+
+  &__color {
+    width: calc(10% - 5vmin);
+    min-width: 1em;
+    max-width: 3em;
+    margin-right: calc(10% - 5vmin);
+    background-image: url("https://media.mnn.com/assets/images/2016/02/sparking-water.jpg.653x0_q80_crop-smart.jpg");
+    background-blend-mode: multiply;
+    background-size: cover;
+    transition: all 0.3s ease;
+  }
+
+  &__title {
+    color: var(--color-main);
+    font-family: Calibri, Arial, sans-serif;
+    transition: all 0.3s ease;
+  }
+
+  &__tagline {
+    color: white;
+  }
+
+  &__footer {
+    margin-top: 1em;
+    max-width: 25em;
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:hover &__color {
+    background-color: white !important;
+  }
+
+  &:hover &__title {
+    color: white;
+  }
+}
 // .beer-article {
 //   display: flex;
 //   min-height: 10em;
@@ -53,9 +103,7 @@ export default class BeerArticleCard extends Vue {
 //     align-self: stretch;
 //     transition: inherit;
 //     margin-right: 5%;
-//     background-image: url("https://media.mnn.com/assets/images/2016/02/sparking-water.jpg.653x0_q80_crop-smart.jpg");
-//     background-blend-mode: multiply;
-//     background-size: cover;
+//
 //   }
 
 //   &__header {
