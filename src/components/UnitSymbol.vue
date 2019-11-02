@@ -29,9 +29,10 @@ export default class extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.unit-symbol {
-  font-size: 0.4em;
-  align-self: flex-end;
-  margin-bottom: 0.5em;
-}
+// .unit-symbol {
+//   font-size: 0.4em;
+//   display: block;
+//   align-self: flex-end;
+//   margin-bottom: 0.5em;
+// }
 </style>

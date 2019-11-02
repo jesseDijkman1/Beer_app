@@ -1,5 +1,5 @@
 <template>
-  <div class="color-display" :style="{background: `rgb(${getColorFromEbc(ebc)})`}"></div>
+  <div class="color-display" :style="{backgroundColor: `rgb(${getColorFromEbc(ebc)})`}"></div>
 </template>
 
 <script lang="ts">
@@ -15,12 +15,3 @@ export default class EbcColorDisplay extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
-.color-display {
-  width: 20px;
-  height: 20px;
-  transform: rotate(45deg);
-  position: relative;
-  border: solid 2px rgba(255, 255, 255, 1);
-}
-</style>

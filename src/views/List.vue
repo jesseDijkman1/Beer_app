@@ -167,9 +167,9 @@ export default class List extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.search-result--empty {
-  font-size: calc(40px + (100 - 40) * ((100vw - 300px) / (1600 - 300)));
-  text-align: center;
-  opacity: 0.5;
-}
+// .search-result--empty {
+//   font-size: calc(40px + (100 - 40) * ((100vw - 300px) / (1600 - 300)));
+//   text-align: center;
+//   opacity: 0.5;
+// }
 </style>

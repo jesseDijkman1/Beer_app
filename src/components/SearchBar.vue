@@ -35,26 +35,26 @@ export default class SearchBar extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.search-bar {
-  border: none;
-  width: 100%;
-  font: inherit;
-  outline: none;
-  color: white;
-  background: none;
-  border-bottom: solid 2px var(--color-main);
-  margin-bottom: 2em;
-  padding: 0.5em 5%;
-  font-size: 1.25em;
+// .search-bar {
+//   border: none;
+//   width: 100%;
+//   font: inherit;
+//   outline: none;
+//   color: white;
+//   background: none;
+//   border-bottom: solid 2px var(--color-main);
+//   margin-bottom: 2em;
+//   padding: 0.5em 5%;
+//   font-size: 1.25em;
 
-  &::placeholder {
-    color: inherit;
-  }
-  &:-ms-input-placeholder {
-    color: inherit;
-  }
-  &::-ms-input-placeholder {
-    color: inherit;
-  }
-}
+//   &::placeholder {
+//     color: inherit;
+//   }
+//   &:-ms-input-placeholder {
+//     color: inherit;
+//   }
+//   &::-ms-input-placeholder {
+//     color: inherit;
+//   }
+// }
 </style>

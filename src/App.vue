@@ -54,30 +54,79 @@ li {
   list-style-type: none;
 }
 
-strong {
+// Font classes (mobile first)
+
+.font-huge {
+  font-size: 32px;
+}
+
+.font-large {
+  font-size: 26px;
+}
+
+.font-medium {
   font-size: 22px;
 }
 
-.main-grid {
-  $sideWidth: calc(10vw - 5vmin);
-  width: 100%;
+.font-regular {
+  font-size: 18px;
+}
+
+.font-small {
+  font-size: 14px;
+}
+
+// main-grid used
+.grid-main {
   display: grid;
-  grid-template-columns: minmax($sideWidth, auto) minmax(auto, 960px) minmax(
-      $sideWidth,
-      auto
+  grid-template-columns: calc(10vw - 7.5vmin) minmax(auto, 960px) calc(
+      10vw - 7.5vmin
     );
+
+  & > * {
+    grid-column: 2 / 3;
+    min-width: 0;
+  }
 }
 
-.main-grid > * {
-  grid-column: 2 / 3;
-  min-width: 0;
+@media (min-width: 400px) {
+  .grid-main {
+    grid-template-columns: minmax(calc(15vw - 5vmin), auto) minmax(auto, 960px) minmax(
+        calc(15vw - 5vmin),
+        auto
+      );
+  }
 }
 
-.full-width {
-  grid-column: 1 / 4;
+@media (min-width: 600px) {
+  .font-huge {
+    font-size: 40px;
+  }
+
+  .font-large {
+    font-size: 32px;
+  }
+
+  .font-medium {
+    font-size: 24px;
+  }
+
+  .font-regular {
+    font-size: 18px;
+  }
+
+  .font-small {
+    font-size: 16px;
+  }
 }
 
-.grid-width {
-  grid-column: 2 / 3;
+@media (min-width: 768px) {
+  .font-huge {
+    font-size: 50px;
+  }
+
+  .font-large {
+    font-size: 40px;
+  }
 }
 </style>

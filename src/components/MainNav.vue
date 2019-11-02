@@ -32,43 +32,43 @@ export default class MainNav extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.is-active {
-  background: blue;
-}
-.main-nav {
-  z-index: 10;
-  position: fixed;
-  top: 0;
-  font-family: Calibri, Arial, sans-serif;
-  color: var(--color-main);
-  height: 3em;
-  font-size: 20px;
-  width: 100%;
-  background-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 0.8) 70%,
-    rgba(0, 0, 0, 0) 100%
-  );
+// .is-active {
+//   background: blue;
+// }
+// .main-nav {
+//   z-index: 10;
+//   position: fixed;
+//   top: 0;
+//   font-family: Calibri, Arial, sans-serif;
+//   color: var(--color-main);
+//   height: 3em;
+//   font-size: 20px;
+//   width: 100%;
+//   background-image: linear-gradient(
+//     to bottom,
+//     rgba(0, 0, 0, 1) 0%,
+//     rgba(0, 0, 0, 0.8) 70%,
+//     rgba(0, 0, 0, 0) 100%
+//   );
 
-  &__list {
-    display: flex;
-    height: 100%;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0;
-    margin: 0;
-    width: 50%;
-    min-width: 340px;
-  }
-  &__item {
-    list-style-type: none;
+//   &__list {
+//     display: flex;
+//     height: 100%;
+//     align-items: center;
+//     justify-content: space-between;
+//     padding: 0;
+//     margin: 0;
+//     width: 50%;
+//     min-width: 340px;
+//   }
+//   &__item {
+//     list-style-type: none;
 
-    a {
-      text-decoration: none;
-      color: var(--color-main);
-    }
-  }
-}
+//     a {
+//       text-decoration: none;
+//       color: var(--color-main);
+//     }
+//   }
+// }
 </style>
 

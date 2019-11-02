@@ -1,15 +1,10 @@
 <template>
-  <div class="main-grid">
-    <div class="grid-width" :style="{background: 'red'}">
-      <section-heading :style="{margin: '20vh 0 1em 0'}" size="large">For the alcoholics</section-heading>
+  <div>
+    <main-heading>For the alcoholics</main-heading>
 
-      <random-beer-button>Random Beer</random-beer-button>
-    </div>
+    <random-beer-button>Random Beer</random-beer-button>
 
-    <section-heading
-      :style="{margin: '30vh 0 2em 0', textAlign: 'center'}"
-      size="medium"
-    >Beers of the day</section-heading>
+    <section-heading>Beers of the day</section-heading>
 
     <sorting-handler
       @sortBy="setSorting"
@@ -19,23 +14,17 @@
     >Sort</sorting-handler>
 
     <grid-list>
-      <template v-for="beer in beers">
-        <beer-article-card
-          :key="beer.id"
-          :id="beer.id"
-          :name="beer.name"
-          :tagline="beer.tagline"
-          :alcohol="beer.abv"
-          :ebc="beer.ebc"
-          :ibu="beer.ibu"
-          @click.native="$router.push({name:'detail', params:{'id': beer.id}})"
-        ></beer-article-card>
-
-        <span :key="'seperator' + beer.id" class="list-seperator">
-          <span></span>
-          <span></span>
-        </span>
-      </template>
+      <beer-article-card
+        v-for="beer in beers"
+        :key="beer.id"
+        :id="beer.id"
+        :name="beer.name"
+        :tagline="beer.tagline"
+        :abv="beer.abv"
+        :ebc="beer.ebc"
+        :ibu="beer.ibu"
+        @click.native="$router.push({name:'detail', params:{'id': beer.id}})"
+      ></beer-article-card>
     </grid-list>
 
     <strong>
@@ -48,6 +37,8 @@
 import { Component, Watch, Vue } from "vue-property-decorator";
 
 import RandomBeerButton from "@/components/RandomBeerButton.vue";
+
+import MainHeading from "@/components/MainHeading.vue";
 import SectionHeading from "@/components/SectionHeading.vue";
 import BeerArticleCard from "@/components/BeerArticleCard.vue";
 import GridList from "@/components/GridList.vue";
@@ -62,6 +53,7 @@ import SortingHandler from "@/components/SortingHandler.vue";
     GridList,
     SortingHandler,
     SearchBar,
+    MainHeading,
   },
 })
 export default class Home extends Vue {
@@ -130,50 +122,50 @@ export default class Home extends Vue {
 </script>
 
 <style lang="scss" scoped>
-h1 {
-  color: white;
-}
+// h1 {
+//   color: white;
+// }
 
-.grid-home {
-  border: solid 1px red;
-}
+// .grid-home {
+//   border: solid 1px red;
+// }
 
-strong {
-  color: var(--color-main);
-}
+// strong {
+//   color: var(--color-main);
+// }
 
-.list-seperator {
-  display: grid;
-  grid-auto-flow: column;
-  grid-gap: 2em;
-  height: 1px;
-  width: 50%;
-  opacity: 0.5;
+// .list-seperator {
+//   display: grid;
+//   grid-auto-flow: column;
+//   grid-gap: 2em;
+//   height: 1px;
+//   width: 50%;
+//   opacity: 0.5;
 
-  &:last-of-type {
-    display: none;
-  }
+//   &:last-of-type {
+//     display: none;
+//   }
 
-  &:nth-of-type(odd) {
-    transform: scaleX(-1); // Flip horizontally
-  }
+//   &:nth-of-type(odd) {
+//     transform: scaleX(-1); // Flip horizontally
+//   }
 
-  span {
-    &:nth-child(odd) {
-      background: white;
-    }
-    &:nth-child(even) {
-      background: var(--color-main);
-    }
-  }
-}
+//   span {
+//     &:nth-child(odd) {
+//       background: white;
+//     }
+//     &:nth-child(even) {
+//       background: var(--color-main);
+//     }
+//   }
+// }
 
-.flex-wrapper--column {
-  display: flex;
-  flex-direction: column;
-}
+// .flex-wrapper--column {
+//   display: flex;
+//   flex-direction: column;
+// }
 
-.list-controls {
-  background: blue;
-}
+// .list-controls {
+//   background: blue;
+// }
 </style>

@@ -16,22 +16,22 @@ export default class extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.beer-article-header {
-  &__title {
-    color: var(--color-main);
-    font-family: Calibri, Arial, sans-serif;
-    font-size: 3rem;
-    transition: all 0.2s linear;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    max-width: 80vw;
-    overflow: hidden;
-  }
+// .beer-article-header {
+//   &__title {
+//     color: var(--color-main);
+//     font-family: Calibri, Arial, sans-serif;
+//     font-size: 2.5rem;
+//     transition: all 0.2s linear;
+//     white-space: nowrap;
+//     text-overflow: ellipsis;
+//     max-width: 80vw;
+//     overflow: hidden;
+//   }
 
-  &__tagline {
-    font-size: 1.25rem;
-    display: flex;
-    max-width: 80vw;
-  }
-}
+//   &__tagline {
+//     font-size: 1.25rem;
+//     display: flex;
+//     max-width: 80vw;
+//   }
+// }
 </style>
