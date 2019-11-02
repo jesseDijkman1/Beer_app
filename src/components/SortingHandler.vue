@@ -42,20 +42,18 @@ export default class SortingHandler extends Vue {
   display: flex;
   flex-direction: column;
 
-  &__button {
-    margin-bottom: 0.5em;
-  }
-
   &__options {
     display: flex;
     justify-content: space-around;
-    transition: max-height 0.3s ease 0.3s;
+    transition: all 0.3s ease 0.3s;
     overflow-y: hidden;
     max-height: 0;
+    margin-top: 0;
   }
 
   .is-active &__options {
     max-height: 10vh;
+    margin-top: 0.5em;
     transition: max-height 0.3s ease;
   }
 
@@ -115,13 +113,11 @@ export default class SortingHandler extends Vue {
     display: flex;
     flex-direction: row-reverse;
 
-    &__button {
-      margin-bottom: 0;
-    }
-
     &__options {
+      align-items: center;
       width: 100%;
       margin-right: 0.5em;
+      margin-top: 0 !important;
     }
   }
 }
