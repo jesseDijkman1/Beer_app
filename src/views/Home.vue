@@ -17,17 +17,19 @@
     >Sort</sorting-handler>
 
     <grid-list>
-      <beer-article-card
-        v-for="beer in beers"
-        :key="beer.id"
-        :id="beer.id"
-        :name="beer.name"
-        :tagline="beer.tagline"
-        :abv="beer.abv"
-        :ebc="beer.ebc"
-        :ibu="beer.ibu"
-        @click.native="$router.push({name:'detail', params:{'id': beer.id}})"
-      ></beer-article-card>
+      <template v-for="beer in beers">
+        <beer-article-card
+          :key="beer.id"
+          :id="beer.id"
+          :name="beer.name"
+          :tagline="beer.tagline"
+          :abv="beer.abv"
+          :ebc="beer.ebc"
+          :ibu="beer.ibu"
+          @click.native="$router.push({name:'detail', params:{'id': beer.id}})"
+        ></beer-article-card>
+        <list-item-seperator :key="'seperator-' +beer.id" />
+      </template>
     </grid-list>
 
     <strong>
@@ -44,6 +46,7 @@ import RandomBeerButton from "@/components/RandomBeerButton.vue";
 import MainHeading from "@/components/headings/MainHeading.vue";
 import SectionHeading from "@/components/headings/SectionHeading.vue";
 
+import ListItemSeperator from "@/components/ListItemSeperator.vue";
 import BeerArticleCard from "@/components/BeerArticleCard.vue";
 import GridList from "@/components/GridList.vue";
 import SearchBar from "@/components/SearchBar.vue";
@@ -58,6 +61,7 @@ import SortingHandler from "@/components/SortingHandler.vue";
     SortingHandler,
     SearchBar,
     MainHeading,
+    ListItemSeperator,
   },
 })
 export default class Home extends Vue {
