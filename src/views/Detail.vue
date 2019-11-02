@@ -2,8 +2,6 @@
   <div>
     <random-beer-button v-if="hasRandomId">Random Beer!</random-beer-button>
 
-    <beer-article-header :title="beer.name" :tagline="beer.tagline" />
-
     <p class="beer-description">{{beer.description}}</p>
 
     <data-item name="ABV" :value="beer.abv" />
@@ -24,7 +22,6 @@ import DataGroupList from "@/components/DataGroupList.vue";
 import MainHeading from "@/components/headings/MainHeading.vue";
 import SectionHeading from "@/components/headings/SectionHeading.vue";
 
-import BeerArticleHeader from "@/components/BeerArticleHeader.vue";
 import BeerMethodCard from "@/components/BeerMethodCard.vue";
 import DataItem from "@/components/DataItem.vue";
 
@@ -33,7 +30,6 @@ import DataItem from "@/components/DataItem.vue";
     RandomBeerButton,
     DataGroupList,
     MainHeading,
-    BeerArticleHeader,
     DataItem,
     SectionHeading,
     BeerMethodCard,
