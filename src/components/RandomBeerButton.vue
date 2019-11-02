@@ -1,6 +1,6 @@
 <template>
   <button
-    class="random-btn font-medium"
+    class="beer-button font-medium"
     @click="$router.push({name: 'detail', params: { id: randomId(), hasRandomId: true }})"
   >
     <slot></slot>
@@ -17,23 +17,3 @@ export default class RandomBeerButton extends Vue {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-// .random-btn {
-//   font-family: Calibri, Arial, sans-serif;
-//   padding: 0.25em 0.5em;
-//   border: solid 2px var(--color-main);
-//   color: var(--color-main);
-//   border-radius: 0.25em;
-//   outline: none;
-//   transition: all 0.2s ease;
-//   background: none;
-// }
-
-// .random-btn:hover {
-//   // transform: scale(1.05)
-//   cursor: pointer;
-//   color: white;
-//   border-color: white;
-// }
-</style>
