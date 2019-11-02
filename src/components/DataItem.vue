@@ -1,6 +1,6 @@
 <template>
   <dl class="data-item">
-    <dt class="data-item__name">{{name}}</dt>
+    <dt class="data-item__name font-small">{{name}}</dt>
     <dd class="data-item__value">
       {{value || "?"}}
       <unit-symbol :unit="unit" />
@@ -26,28 +26,20 @@ export default class extends Vue {
 </script>
 
 <style lang="scss" scoped>
-// .data-item {
-//   display: flex;
-//   align-items: flex-end;
-//   font-size: calc(12px + (26 - 12) * ((100vw - 300px) / (1600 - 300)));
+.data-item {
+  display: flex;
+  align-items: flex-end;
 
-//   &__name {
-//     color: var(--color-main);
-//     font-family: Calibri, Arial, sans-serif;
-//     font-weight: bold;
-//     margin-right: 0.25em;
-//   }
+  &__name {
+    color: var(--color-main);
+    font-weight: bold;
+    font-family: Calibri, Arial, sans-serif;
+  }
 
-//   &__value {
-//     font-weight: bold;
-//     font-size: 2.625em;
-//     display: flex;
-//   }
-// }
-
-// @media (min-width: 320px) {
-//   .data-item {
-//     font-size: 14px;
-//   }
-// }
+  &__value {
+    font-size: calc(18px + (32 - 18) * ((100vw - 300px) / (1600 - 300)));
+    font-weight: bold;
+    margin-bottom: 0.5em;
+  }
+}
 </style>
