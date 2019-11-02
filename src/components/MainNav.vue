@@ -93,6 +93,7 @@ export default class MainNav extends Vue {
     align-items: center;
     display: grid;
     grid-auto-flow: row;
+    justify-items: start;
     max-height: 0;
     overflow: hidden;
     width: 100%;
@@ -103,10 +104,33 @@ export default class MainNav extends Vue {
     color: var(--color-main);
     font-family: Calibri, Arial, sans-serif;
     font-weight: bold;
-    transition: all 1s ease;
+    transition: color 1s ease;
+    position: relative;
+
+    &:hover {
+      cursor: pointer;
+      color: white;
+    }
+
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 0;
+      height: 3px;
+      background: white;
+      bottom: 0;
+      left: 0;
+      transition: all 0.3s ease;
+    }
 
     &.is-active {
       color: white;
+
+      &::after {
+        width: 100%;
+        z-index: 10;
+      }
     }
   }
 }
