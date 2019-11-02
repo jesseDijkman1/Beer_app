@@ -70,6 +70,7 @@ export default class SearchBar extends Vue {
   }
 
   &__input {
+    width: 100%;
     color: #888;
     transition: all 0.2s ease;
 

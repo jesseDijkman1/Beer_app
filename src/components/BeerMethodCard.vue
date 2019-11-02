@@ -1,6 +1,8 @@
 <template>
   <div class="beer-method-card">
-    <h3 class="beer-method-card__title font-medium">{{name}}</h3>
+    <h3 class="beer-method-card__title font-medium">
+      <slot></slot>
+    </h3>
     <p class="beer-method-card__description font-regular" v-if="typeof data == 'string'">{{data}}</p>
     <description-list v-else class="beer-method-card__description" :data="data" />
   </div>
@@ -19,7 +21,6 @@ import DataItem from "@/components/DataItem.vue";
   },
 })
 export default class extends Vue {
-  @Prop() name!: string;
   @Prop() data!: object[] | object | string;
 
   created() {
@@ -45,27 +46,4 @@ export default class extends Vue {
     margin: 0 1em;
   }
 }
-// .beer-method-card {
-//   border: solid 1px red;
-//   padding: 1em;
-//   display: inline-flex;
-//   flex-direction: column;
-//   background: black;
-//   box-sizing: padding-box;
-
-//   &__title {
-//     text-align: left;
-//     font-size: 1.5rem;
-//   }
-
-//   &__data {
-//     display: flex;
-//   }
-
-//   &__item {
-//     &:not(:last-of-type) {
-//       margin-right: 5vw;
-//     }
-//   }
-// }
 </style>

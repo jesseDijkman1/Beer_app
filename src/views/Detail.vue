@@ -7,31 +7,82 @@
       <p class="beer-page__tagline font-medium">{{beer.tagline}}</p>
     </header>
 
-    <p class="beer-page__description font-regular">{{beer.description}}</p>
+    <grid-list :multiple-columns="true">
+      <p class="beer-page__description font-regular">{{beer.description}}</p>
 
-    <section-heading>Data</section-heading>
-
-    <section class="beer-page__section beer-page__section--data">
-      <data-item name="ABV" :value="beer.abv" />
-      <data-item name="IBU" :value="beer.ibu" />
-      <data-item name="EBC" :value="beer.ebc" />
-      <data-item name="FG" :value="beer.target_fg" />
-      <data-item name="OG" :value="beer.target_og" />
-      <data-item name="SRM" :value="beer.srm" />
-      <data-item name="PH" :value="beer.ph" />
-    </section>
+      <section class="beer-page__section beer-page__section--data">
+        <data-item name="ABV" :value="beer.abv" />
+        <data-item name="IBU" :value="beer.ibu" />
+        <data-item name="EBC" :value="beer.ebc" />
+        <data-item name="FG" :value="beer.target_fg" />
+        <data-item name="OG" :value="beer.target_og" />
+        <data-item name="SRM" :value="beer.srm" />
+        <data-item name="PH" :value="beer.ph" />
+      </section>
+    </grid-list>
 
     <section-heading>Method</section-heading>
 
     <section class="beer-page__section beer-page__section--method">
-      <grid-list>
-        <beer-method-card name="Mash Temperature" :data="methodData.mash_temp" />
-        <beer-method-card name="Fermentation" :data="methodData.fermentation" />
-        <beer-method-card name="Twist" :data="methodData.twist" />
+      <grid-list :multiple-columns="true">
+        <beer-method-card :data="methodData.mash_temp">Mash Temperature</beer-method-card>
+        <beer-method-card :data="methodData.fermentation">Fermentation</beer-method-card>
+        <beer-method-card :data="methodData.twist">Twist</beer-method-card>
       </grid-list>
     </section>
 
-    <section-heading>Ingredients</section-heading><section
+    <section-heading>Ingredients</section-heading>
+
+    <section class="beer-page__section beer-page__section--ingredients">
+      <grid-list>
+        <div class="ingredient-category">
+          <h3 class="ingredient-category__title font-medium">Malt</h3>
+          <grid-list :multiple-columns="true">
+            <div
+              class="ingredient-card"
+              :key="'malt-'+index"
+              v-for="(malt, index) in ingredientData.malt"
+            >
+              <description-list :data="malt" />
+            </div>
+          </grid-list>
+        </div>
+
+        <div class="ingredients-category">
+          <h3 class="ingredient-category__title font-medium">Hops</h3>
+          <grid-list :multiple-columns="true">
+            <div
+              class="ingredient-card"
+              :key="'hops-'+index"
+              v-for="(hops, index) in ingredientData.hops"
+            >
+              <description-list :data="hops" />
+            </div>
+          </grid-list>
+        </div>
+
+        <div class="ingredients-category">
+          <h3 class="ingredient-category__title font-medium">Yeast</h3>
+          <grid-list>
+            <div class="ingredient-card">
+              <p class="font-regular">{{ingredientData.yeast}}</p>
+            </div>
+          </grid-list>
+        </div>
+      </grid-list>
+    </section>
+
+    <section-heading>Food Pairing</section-heading>
+
+    <section class="beer-page__section beer-page__section--food-pairing">
+      <grid-list class="food-pairing-list">
+        <p
+          class="food-pairing-list__item font-medium"
+          :key="'food-' + index"
+          v-for="(food, index) in beer.food_pairing"
+        >{{food}}</p>
+      </grid-list>
+    </section>
   </div>
 </template>
 
@@ -41,11 +92,14 @@ import RandomBeerButton from "@/components/RandomBeerButton.vue";
 import DataGroupList from "@/components/DataGroupList.vue";
 
 import GridList from "@/components/GridList.vue";
+import ListItemSeperator from "@/components/ListItemSeperator.vue";
 
 import MainHeading from "@/components/headings/MainHeading.vue";
 import SectionHeading from "@/components/headings/SectionHeading.vue";
 
 import BeerMethodCard from "@/components/BeerMethodCard.vue";
+import DescriptionList from "@/components/DescriptionList.vue";
+
 import DataItem from "@/components/DataItem.vue";
 
 @Component({
@@ -56,7 +110,9 @@ import DataItem from "@/components/DataItem.vue";
     DataItem,
     SectionHeading,
     BeerMethodCard,
+    DescriptionList,
     GridList,
+    ListItemSeperator,
   },
 })
 export default class Detail extends Vue {
@@ -65,6 +121,9 @@ export default class Detail extends Vue {
   @Prop({ default: false }) hasRandomId!: boolean;
 
   beer: object = {};
+
+  methodData!: object;
+  ingredientData!: object;
 
   @Watch("id", { immediate: true })
   async fn() {
@@ -85,29 +144,78 @@ export default class Detail extends Vue {
     return `https://api.punkapi.com/v2/beers/${this.id}`;
   }
 
-  get methodData() {
-    console.log("fuck", this.beer.method);
+  @Watch("beer")
+  fn2() {
+    this.methodData = this.createMethodData(this.beer);
+    this.ingredientData = this.createIngredientData(this.beer);
+  }
+
+  createMethodData(data) {
     return {
       mash_temp: [
         {
           title: "Temperature",
-          value: this.beer.method.mash_temp[0].temp.value,
-          unit: this.beer.method.mash_temp[0].temp.unit,
+          value: data.method.mash_temp[0].temp.value,
+          unit: data.method.mash_temp[0].temp.unit,
         },
         {
           title: "Duration",
-          value: this.beer.method.mash_temp[0].duration,
+          value: data.method.mash_temp[0].duration,
           unit: "",
         },
       ],
       fermentation: [
         {
           title: "Temperature",
-          value: this.beer.method.fermentation.temp.value,
-          unit: this.beer.method.fermentation.temp.unit,
+          value: data.method.fermentation.temp.value,
+          unit: data.method.fermentation.temp.unit,
         },
       ],
-      twist: this.beer.method.twist || "None",
+      twist: data.method.twist || "None",
+    };
+  }
+
+  createIngredientData(data) {
+    return {
+      malt: data.ingredients.malt.map(malt => {
+        return [
+          {
+            title: "Name",
+            value: malt.name,
+            unit: "",
+          },
+          {
+            title: "Amount",
+            value: malt.amount.value,
+            unit: malt.amount.unit,
+          },
+        ];
+      }),
+      hops: data.ingredients.hops.map(hops => {
+        return [
+          {
+            title: "Name",
+            value: hops.name,
+            unit: "",
+          },
+          {
+            title: "Amount",
+            value: hops.amount.value,
+            unit: hops.amount.unit,
+          },
+          {
+            title: "Add",
+            value: hops.add,
+            unit: "",
+          },
+          {
+            title: "Attribute",
+            value: hops.attribute,
+            unit: "",
+          },
+        ];
+      }),
+      yeast: data.ingredients.yeast || "",
     };
   }
 }
@@ -126,7 +234,7 @@ export default class Detail extends Vue {
   }
 
   &__description {
-    margin-bottom: 3em;
+    margin-bottom: 1em;
   }
 
   &__section {
@@ -140,6 +248,55 @@ export default class Detail extends Vue {
     }
   }
 }
+
+.ingredient-category {
+  &__title {
+    text-align: center;
+    opacity: 0.5;
+    margin-bottom: 0.25em;
+  }
+}
+
+.ingredient-card {
+  border: solid 1px rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5em 0;
+}
+
+.food-pairing-list {
+  .food-pairing-list__item {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+
+    &::after,
+    &::before {
+      content: "";
+      display: inline-block;
+      min-width: 0.5em;
+      min-height: 0.5em;
+      background: var(--color-main);
+      border-radius: 100%;
+    }
+
+    &::after {
+      margin-left: 0.5em;
+    }
+  }
+
+  &::before {
+    margin-right: 0.5em;
+  }
+}
+
+// .beer-page__section {
+//   display: flex;
+//   flex-wrap: wrap;
+// }
 // .inner-grid {
 //   display: grid;
 //   grid-template-columns: minmax(320px, 2fr) 1fr;

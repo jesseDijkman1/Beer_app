@@ -1,6 +1,6 @@
 <template>
   <dl class="description-list">
-    <template v-for="(d, i) in _data">
+    <template v-for="(d, i) in data">
       <dt class="description-list__title font-small" :key="'t-' + i">{{d.title}}</dt>
       <dd class="description-list__value font-regular" :key="'d' + i">{{d.value}}</dd>
     </template>
@@ -14,13 +14,13 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 export default class extends Vue {
   @Prop() data!: object[];
 
-  get _data() {
-    if (Array.isArray(this.data)) {
-      return this.data;
-    } else {
-      return [this.data];
-    }
-  }
+  // get _data() {
+  //   if (Array.isArray(this.data)) {
+  //     return this.data;
+  //   } else {
+  //     return [this.data];
+  //   }
+  // }
 }
 </script>
 
@@ -29,7 +29,8 @@ export default class extends Vue {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-row-gap: 0.5em;
-  align-items: end;
+  align-items: center;
+  padding: 0 0.5em;
 
   &__title {
     font-family: Calibri, Arial, sans-serif;

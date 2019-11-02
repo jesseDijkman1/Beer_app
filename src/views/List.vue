@@ -1,5 +1,5 @@
 <template>
-  <div class="main-grid">
+  <div class="grid-base">
     <main-heading>All beers</main-heading>
     <search-bar
       @search="search"

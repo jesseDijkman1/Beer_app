@@ -64,14 +64,15 @@ li {
   list-style-type: none;
 }
 
-button {
+button,
+input {
   outline: none;
   border: none;
   background: none;
+}
 
-  &:hover {
-    cursor: pointer;
-  }
+button:hover {
+  cursor: pointer;
 }
 
 // Button styling
