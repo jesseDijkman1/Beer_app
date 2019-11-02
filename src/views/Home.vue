@@ -1,8 +1,12 @@
 <template>
   <div class="grid-base">
-    <main-heading>For the alcoholics</main-heading>
+    <div class="home-header">
+      <main-heading>For the brewers</main-heading>
 
-    <random-beer-button>Random Beer</random-beer-button>
+      <random-beer-button>Random Beer</random-beer-button>
+
+      <span>&#8609;</span>
+    </div>
 
     <section-heading>Beers of the day</section-heading>
 
@@ -122,6 +126,32 @@ export default class Home extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.home-header {
+  display: flex;
+  flex-direction: column;
+
+  padding-top: 25vh;
+  align-items: center;
+  height: 100vh;
+
+  span {
+    margin-top: 5vh;
+    opacity: 0.5;
+    color: var(--color-main);
+    font-size: 100px;
+
+    animation: verticalPendulum 0.5s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes verticalPendulum {
+  0% {
+    transform: translateY(-0.2em);
+  }
+  100% {
+    transform: translateY(0.2em);
+  }
+}
 // h1 {
 //   color: white;
 // }
