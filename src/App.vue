@@ -1,12 +1,13 @@
 <template>
   <div id="app">
-    <main-nav class="grid-base"></main-nav>
+    <main-nav></main-nav>
+    <div id="app-view">
+      <keep-alive include="Home">
+        <router-view></router-view>
+      </keep-alive>
 
-    <keep-alive include="Home">
-      <router-view></router-view>
-    </keep-alive>
-
-    <site-map class="grid-base"></site-map>
+      <site-map class="grid-base"></site-map>
+    </div>
   </div>
 </template>
 
@@ -19,7 +20,9 @@ import { RouteObject } from "@/types";
 @Component({
   components: { SiteMap, MainNav },
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  isOpen: boolean = false;
+}
 </script>
 
 <style lang="scss">
@@ -42,7 +45,14 @@ body {
 }
 
 #app {
-  padding-top: 60px;
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-auto-flow: row;
+}
+
+#app-view {
+  overflow: scroll;
 }
 
 a {
@@ -54,6 +64,10 @@ li {
   list-style-type: none;
 }
 
+button {
+  outline: none;
+}
+
 // Button styling
 .beer-button {
   color: var(--color-main);
@@ -61,6 +75,12 @@ li {
   background: none;
   padding: 0.25em 0.5em;
   border-radius: 0.25em;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: white;
+    border-color: white;
+  }
 }
 
 // Font classes (mobile first)
@@ -87,6 +107,7 @@ li {
 // Base grid
 .grid-base {
   display: grid;
+  width: 100vw;
   grid-template-columns: calc(10vw - 7.5vmin) minmax(auto, 960px) calc(
       10vw - 7.5vmin
     );
@@ -117,10 +138,6 @@ li {
 
   .font-medium {
     font-size: 24px;
-  }
-
-  .font-regular {
-    font-size: 18px;
   }
 
   .font-small {
