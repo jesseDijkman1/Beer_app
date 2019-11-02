@@ -59,7 +59,7 @@ import SearchBar from "@/components/SearchBar.vue";
 import FooterPagination from "@/components/FooterPagination.vue";
 import CircleLoader from "@/components/CircleLoader.vue";
 import SortingHandler from "@/components/SortingHandler.vue";
-import MainHeading from "@/components/MainHeading.vue";
+import MainHeading from "@/components/headings/MainHeading.vue";
 
 @Component({
   components: {

@@ -20,8 +20,10 @@
 import { Component, Watch, Prop, Vue } from "vue-property-decorator";
 import RandomBeerButton from "@/components/RandomBeerButton.vue";
 import DataGroupList from "@/components/DataGroupList.vue";
-import MainHeading from "@/components/MainHeading.vue";
-import SectionHeading from "@/components/SectionHeading.vue";
+
+import MainHeading from "@/components/headings/MainHeading.vue";
+import SectionHeading from "@/components/headings/SectionHeading.vue";
+
 import BeerArticleHeader from "@/components/BeerArticleHeader.vue";
 import BeerMethodCard from "@/components/BeerMethodCard.vue";
 import DataItem from "@/components/DataItem.vue";

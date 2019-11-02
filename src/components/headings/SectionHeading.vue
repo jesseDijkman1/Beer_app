@@ -12,6 +12,11 @@ export default class extends Vue {}
 </script>
 
 <style lang="scss" scoped>
+.section-heading {
+  color: var(--color-main);
+  font-family: Calibri, Arial, sans-serif;
+  border-bottom: solid 2px var(--color-main);
+}
 // .section-heading {
 //   color: white;
 //   font-family: Calibri, Arial, sans-serif;

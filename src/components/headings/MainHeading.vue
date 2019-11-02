@@ -16,6 +16,6 @@ export default class extends Vue {}
   color: white;
   font-family: Calibri, Arial, sans-serif;
   text-align: center;
-  //   margin: 1em 0;
+  margin: 1em 0;
 }
 </style>

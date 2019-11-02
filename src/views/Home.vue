@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="grid-base">
     <main-heading>For the alcoholics</main-heading>
 
     <random-beer-button>Random Beer</random-beer-button>
@@ -9,7 +9,6 @@
     <sorting-handler
       @sortBy="setSorting"
       :options="['name', 'ebc', 'ibu', 'abv']"
-      class="grid-width"
       :style="{alignSelf: 'flex-end'}"
     >Sort</sorting-handler>
 
@@ -38,8 +37,9 @@ import { Component, Watch, Vue } from "vue-property-decorator";
 
 import RandomBeerButton from "@/components/RandomBeerButton.vue";
 
-import MainHeading from "@/components/MainHeading.vue";
-import SectionHeading from "@/components/SectionHeading.vue";
+import MainHeading from "@/components/headings/MainHeading.vue";
+import SectionHeading from "@/components/headings/SectionHeading.vue";
+
 import BeerArticleCard from "@/components/BeerArticleCard.vue";
 import GridList from "@/components/GridList.vue";
 import SearchBar from "@/components/SearchBar.vue";
