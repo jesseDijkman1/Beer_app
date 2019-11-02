@@ -12,9 +12,10 @@ export default class extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-// .main-heading {
-//   color: white;
-//   font-family: Calibri, Arial, sans-serif;
-//   margin: 1em 0;
-// }
+.main-heading {
+  color: white;
+  font-family: Calibri, Arial, sans-serif;
+  text-align: center;
+  //   margin: 1em 0;
+}
 </style>
