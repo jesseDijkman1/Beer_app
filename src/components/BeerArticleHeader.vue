@@ -1,7 +1,7 @@
 <template>
   <header class="beer-article-header">
-    <h1 class="beer-article-header__title">{{title}}</h1>
-    <p class="beer-article-header__tagline">{{tagline}}</p>
+    <h1 class="beer-article-header__title font-large">{{title}}</h1>
+    <p class="beer-article-header__tagline font-regular">{{tagline}}</p>
   </header>
 </template>
 
@@ -16,22 +16,10 @@ export default class extends Vue {
 </script>
 
 <style lang="scss" scoped>
-// .beer-article-header {
-//   &__title {
-//     color: var(--color-main);
-//     font-family: Calibri, Arial, sans-serif;
-//     font-size: 2.5rem;
-//     transition: all 0.2s linear;
-//     white-space: nowrap;
-//     text-overflow: ellipsis;
-//     max-width: 80vw;
-//     overflow: hidden;
-//   }
-
-//   &__tagline {
-//     font-size: 1.25rem;
-//     display: flex;
-//     max-width: 80vw;
-//   }
-// }
+.beer-article-header {
+  &__title {
+    color: var(--color-main);
+    font-family: Calibri, Arial, sans-serif;
+  }
+}
 </style>
