@@ -34,12 +34,13 @@ export default class extends Vue {
     color: var(--color-main);
     font-weight: bold;
     font-family: Calibri, Arial, sans-serif;
+    margin-right: 0.5em;
   }
 
   &__value {
-    font-size: calc(18px + (32 - 18) * ((100vw - 300px) / (1600 - 300)));
+    font-size: calc(18px + (40 - 18) * ((100vw - 320px) / (1600 - 320)));
     font-weight: bold;
-    margin-bottom: 0.5em;
+    margin-bottom: 0.25em;
   }
 }
 </style>
