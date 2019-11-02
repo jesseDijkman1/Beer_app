@@ -1,21 +1,21 @@
 <template>
   <div class="sorting-handler font-medium" :class="{'is-active': isActive}">
+    <button @click="isActive = !isActive" class="sorting-handler__button beer-button font-medium">
+      <slot></slot>
+    </button>
     <div class="sorting-handler__options">
       <button
         :key="i"
         v-for="(option, i) in options"
-        class="sorting-handler__option"
+        class="sorting-handler__option font-regular"
         :class="{'is-current': current == option}"
         :style="{transitionDelay: `${i / 20}s`}"
         @click="sort(option)"
       >
         {{option}}
-        <span class="double-arrow"></span>
+        <span></span>
       </button>
     </div>
-    <button @click="isActive = !isActive" class="sorting-handler__button">
-      <slot></slot>
-    </button>
   </div>
 </template>
 
@@ -38,94 +38,92 @@ export default class SortingHandler extends Vue {
 </script>
 
 <style lang="scss" scoped>
-// .sorting-handler {
+.sorting-handler {
+  display: flex;
+  flex-direction: column;
 
-//   display: flex;
-//   align-items: center;
-//   justify-content: flex-end;
-//   flex-wrap: wrap;
-//   // font-size: 1.5rem;
-//   margin-bottom: 1em;
+  &__button {
+    margin-bottom: 0.5em;
+  }
 
-//   &__options {
-//     display: grid;
-//     grid-auto-flow: column;
-//     grid-gap: 0.5em;
-//     font-family: inherit;
-//     flex-grow: 1;
-//     overflow-x: scroll;
-//   }
+  &__options {
+    display: flex;
+    justify-content: space-around;
+    transition: max-height 0.3s ease 0.3s;
+    overflow-y: hidden;
+    max-height: 0;
+  }
 
-//   &__option {
-//     background: var(--color-main);
-//     border: none;
-//     font-family: inherit;
-//     font-size: inherit;
-//     color: black;
-//     font-weight: bold;
-//     padding: 0.25em 0.5em;
-//     outline: none;
-//     white-space: nowrap;
-//     justify-self: center;
-//     border-radius: 0.25em;
-//     display: flex;
-//     align-items: stretch;
-//     transform: translateY(-100%);
-//     opacity: 0;
-//     transition: transform 0.2s ease-in-out, opacity 0.2s linear;
+  .is-active &__options {
+    max-height: 10vh;
+    transition: max-height 0.3s ease;
+  }
 
-//     &.is-current {
-//       background: white;
-//     }
-//   }
+  &__option {
+    display: inline-flex;
+    align-items: stretch;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.25em 0.5em;
+    color: white;
+    border-radius: 0.2em;
+    transform: translateX(-100vw);
+    transition: background 0.3s ease, transform 0.3s ease;
 
-//   .is-active &__option {
-//     opacity: 1;
-//     transform: translateY(0);
-//   }
+    &:hover {
+      background: rgba(255, 255, 255, 0.5);
 
-//   &__button {
-//     padding: 0.25em 0.5em;
-//     border: solid 2px var(--color-main);
-//     color: var(--color-main);
-//     font: inherit;
-//     border-radius: 0.25em;
-//     outline: none;
-//     background: none;
-//     transition: all 0.2s linear;
-//   }
+      span::before,
+      span::after {
+        background: white;
+      }
+    }
 
-//   .is-active &__button {
-//     color: white;
-//     border-color: white;
-//   }
-// }
+    span {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      width: 0.35em;
+      justify-content: space-between;
+      margin-left: 0.5em;
 
-// .double-arrow {
-//   width: 0.5em;
-//   position: relative;
-//   margin-left: 0.5em;
-//   transform: scaleY(0.75);
+      &::after,
+      &::before {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 40%;
+        background: var(--color-main);
+        transition: all 0.3s ease;
+      }
 
-//   &::after,
-//   &::before {
-//     content: "";
-//     display: block;
-//     position: absolute;
-//     background: black;
-//     width: 100%;
-//     height: 40%;
-//   }
+      &::before {
+        clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+      }
+      &::after {
+        clip-path: polygon(0% 0%, 50% 100%, 100% 0%);
+      }
+    }
+  }
 
-//   &::after {
-//     top: 0;
-//     clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
-//   }
+  .is-active &__option {
+    transform: translateX(0);
+  }
+}
 
-//   &::before {
-//     bottom: 0;
-//     clip-path: polygon(0% 0, 50% 100%, 100% 0%);
-//   }
-// }
+@media (min-width: 500px) {
+  .sorting-handler {
+    display: flex;
+    flex-direction: row-reverse;
+
+    &__button {
+      margin-bottom: 0;
+    }
+
+    &__options {
+      width: 100%;
+      margin-right: 0.5em;
+    }
+  }
+}
 </style>
 
