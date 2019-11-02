@@ -80,7 +80,6 @@ export default class MainNav extends Vue {
     flex-direction: column;
     justify-content: space-between;
     align-items: stretch;
-    outline: none;
 
     &:hover {
       cursor: pointer;

@@ -16,13 +16,7 @@ export default class extends Vue {}
   color: var(--color-main);
   font-family: Calibri, Arial, sans-serif;
   border-bottom: solid 2px white;
+  margin-bottom: 0.5em;
+  padding-bottom: 0.25em;
 }
-// .section-heading {
-//   color: white;
-//   font-family: Calibri, Arial, sans-serif;
-//   // font-size: 2.25rem;
-//   text-align: center;
-//   padding-bottom: 0.25em;
-//   border-bottom: solid 2px var(--color-main);
-// }
 </style>

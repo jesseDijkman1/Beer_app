@@ -41,6 +41,7 @@ export default class SortingHandler extends Vue {
 .sorting-handler {
   display: flex;
   flex-direction: column;
+  margin-bottom: 1em;
 
   &__options {
     display: flex;
