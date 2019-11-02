@@ -1,16 +1,24 @@
 <template>
-  <nav class="main-nav">
-    <ul class="main-nav__list">
-      <li class="main-nav__item">
-        <router-link to="/">Home</router-link>
-      </li>
-      <li class="main-nav__item">
-        <router-link to="/beers">Beers</router-link>
-      </li>
-      <li class="main-nav__item">
-        <random-beer-link>Random</random-beer-link>
-      </li>
-    </ul>
+  <nav class="main-nav grid-base" :class="{'is-open': isOpen}">
+    <div class="main-nav__container">
+      <button @click="isOpen = !isOpen" class="main-nav__hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="main-nav__list">
+        <li class="main-nav__item font-medium">
+          <router-link to="/">Home</router-link>
+        </li>
+        <li class="main-nav__item font-medium">
+          <router-link to="/beers">Beers</router-link>
+        </li>
+        <li class="main-nav__item font-medium">
+          <random-beer-link>Random</random-beer-link>
+        </li>
+      </ul>
+    </div>
   </nav>
 </template>
 
@@ -25,6 +33,7 @@ import RandomBeerLink from "./RandomBeerLink.vue";
 })
 export default class MainNav extends Vue {
   currentRoute!: string;
+  isOpen: boolean = false;
 
   @Watch("$route")
   fn() {}
@@ -32,43 +41,73 @@ export default class MainNav extends Vue {
 </script>
 
 <style lang="scss" scoped>
-// .is-active {
-//   background: blue;
-// }
-// .main-nav {
-//   z-index: 10;
-//   position: fixed;
-//   top: 0;
-//   font-family: Calibri, Arial, sans-serif;
-//   color: var(--color-main);
-//   height: 3em;
-//   font-size: 20px;
-//   width: 100%;
-//   background-image: linear-gradient(
-//     to bottom,
-//     rgba(0, 0, 0, 1) 0%,
-//     rgba(0, 0, 0, 0.8) 70%,
-//     rgba(0, 0, 0, 0) 100%
-//   );
+.main-nav {
+  padding: 1em 0;
 
-//   &__list {
-//     display: flex;
-//     height: 100%;
-//     align-items: center;
-//     justify-content: space-between;
-//     padding: 0;
-//     margin: 0;
-//     width: 50%;
-//     min-width: 340px;
-//   }
-//   &__item {
-//     list-style-type: none;
+  .is-open & {
+    &__list {
+      margin-top: 1em;
+      max-height: 100vh;
+    }
 
-//     a {
-//       text-decoration: none;
-//       color: var(--color-main);
-//     }
-//   }
-// }
+    &__hamburger {
+      span {
+        background: white;
+      }
+    }
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  &__hamburger {
+    height: 1.5em;
+    width: 1.5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    outline: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    span {
+      transition: all 0.3s ease;
+      height: 2px;
+      background: var(--color-main);
+    }
+  }
+
+  &__list {
+    align-items: center;
+    display: grid;
+    grid-auto-flow: row;
+    max-height: 0;
+    overflow: hidden;
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+
+  &__item {
+    color: var(--color-main);
+    font-family: Calibri, Arial, sans-serif;
+    font-weight: bold;
+  }
+}
+
+@media (min-width: 400px) {
+  .main-nav__hamburger {
+    display: none;
+  }
+  .main-nav__list {
+    max-height: none;
+    grid-auto-flow: column;
+  }
+}
 </style>
 
