@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <main-nav></main-nav>
+    <main-nav class="grid-base"></main-nav>
 
     <keep-alive include="Home">
       <router-view></router-view>
     </keep-alive>
 
-    <site-map></site-map>
+    <site-map class="grid-base"></site-map>
   </div>
 </template>
 
@@ -54,6 +54,15 @@ li {
   list-style-type: none;
 }
 
+// Button styling
+.beer-button {
+  color: var(--color-main);
+  border: solid 1px var(--color-main);
+  background: none;
+  padding: 0.25em 0.5em;
+  border-radius: 0.25em;
+}
+
 // Font classes (mobile first)
 
 .font-huge {
@@ -76,8 +85,8 @@ li {
   font-size: 14px;
 }
 
-// main-grid used
-.grid-main {
+// Base grid
+.grid-base {
   display: grid;
   grid-template-columns: calc(10vw - 7.5vmin) minmax(auto, 960px) calc(
       10vw - 7.5vmin
@@ -90,7 +99,7 @@ li {
 }
 
 @media (min-width: 400px) {
-  .grid-main {
+  .grid-base {
     grid-template-columns: minmax(calc(15vw - 5vmin), auto) minmax(auto, 960px) minmax(
         calc(15vw - 5vmin),
         auto
