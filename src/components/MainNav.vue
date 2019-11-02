@@ -42,6 +42,10 @@ export default class MainNav extends Vue {
   @Watch("$route")
   fn() {
     this.currentRoute = this.$router.currentRoute.name || "";
+
+    setTimeout(() => {
+      this.isOpen = false;
+    }, 500);
   }
 }
 </script>
