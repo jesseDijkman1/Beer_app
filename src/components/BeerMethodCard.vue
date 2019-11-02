@@ -11,7 +11,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-import SectionHeading from "@/components/SectionHeading.vue";
+import SectionHeading from "@/components/headings/SectionHeading.vue";
 import DataItem from "@/components/DataItem.vue";
 
 @Component({
