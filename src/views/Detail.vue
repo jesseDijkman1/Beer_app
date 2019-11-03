@@ -84,20 +84,25 @@
       </grid-list>
     </section>
 
-    <section-heading>Similar Beers</section-heading>
+    <section class="beer-page__section beer-page__section--suggestions full-width">
+      <section-heading class="beer-page__section--suggestions__title">Similar Beers</section-heading>
 
-    <section class="beer-page__section beer-page__section--suggestions">
-      <beer-article-card
-        v-for="beer in suggestions"
-        :key="beer.id"
-        :id="beer.id"
-        :name="beer.name"
-        :tagline="beer.tagline"
-        :abv="beer.abv"
-        :ebc="beer.ebc"
-        :ibu="beer.ibu"
-        @click.native="$router.push({name:'detail', params:{'id': beer.id}})"
-      ></beer-article-card>
+      <beer-article-carousel :items="3">
+        <beer-article-card
+          v-for="(beer, index) in suggestions"
+          class="beer-page__section--suggestions__card"
+          :colorDisplay="false"
+          :slot="'item-' + (index + 1)"
+          :key="beer.id"
+          :id="beer.id"
+          :name="beer.name"
+          :tagline="beer.tagline"
+          :abv="beer.abv"
+          :ebc="beer.ebc"
+          :ibu="beer.ibu"
+          @click.native="$router.push({name:'detail', params:{'id': beer.id}})"
+        ></beer-article-card>
+      </beer-article-carousel>
     </section>
   </div>
 </template>
@@ -111,6 +116,7 @@ import GridList from "@/components/GridList.vue";
 import ListItemSeperator from "@/components/ListItemSeperator.vue";
 
 import BeerArticleCard from "@/components/BeerArticleCard.vue";
+import BeerArticleCarousel from "@/components/BeerArticleCarousel.vue";
 
 import MainHeading from "@/components/headings/MainHeading.vue";
 import SectionHeading from "@/components/headings/SectionHeading.vue";
@@ -132,6 +138,7 @@ import DataItem from "@/components/DataItem.vue";
     GridList,
     ListItemSeperator,
     BeerArticleCard,
+    BeerArticleCarousel,
   },
 })
 export default class Detail extends Vue {
@@ -169,7 +176,7 @@ export default class Detail extends Vue {
 
         resolve(results);
       } catch (error) {
-        reject(new Error("API call failed!"));
+        throw new Error("API call failed!");
       }
     });
   }
@@ -332,6 +339,22 @@ export default class Detail extends Vue {
       grid-template-columns: repeat(3, 1fr);
       grid-gap: 1em;
       justify-items: center;
+    }
+
+    &--suggestions {
+      background: var(--color-main);
+      padding: 1em 0;
+
+      &__title {
+        color: black;
+        text-align: center;
+        border: none;
+      }
+
+      &__card {
+        padding: 0.5em 1em;
+        background: black;
+      }
     }
   }
 }
