@@ -1,6 +1,6 @@
 <template>
   <div class="beer-page grid-base">
-    <random-beer-button v-if="hasRandomId">Random Beer!</random-beer-button>
+    <random-beer-button class="beer-page__random-button" v-if="hasRandomId">Random Beer!</random-beer-button>
 
     <header class="beer-page__header">
       <main-heading class="beer-page__name">{{beer.name}}</main-heading>
@@ -83,6 +83,8 @@
         >{{food}}</p>
       </grid-list>
     </section>
+
+    <section-heading>Similar Beers</section-heading>
   </div>
 </template>
 
@@ -122,8 +124,10 @@ export default class Detail extends Vue {
 
   beer: object = {};
 
-  methodData!: object;
-  ingredientData!: object;
+  suggestions!: any;
+
+  methodData: object = {};
+  ingredientData: object = {};
 
   @Watch("id", { immediate: true })
   async fn() {
@@ -140,6 +144,66 @@ export default class Detail extends Vue {
     }
   }
 
+  fetcher(url: string) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await fetch(url);
+        const results = await response.json();
+
+        resolve(results);
+      } catch (error) {
+        reject(new Error("API call failed!"));
+      }
+    });
+  }
+
+  async getSuggestions(data) {
+    const baseUrl = "https://api.punkapi.com/v2/beers/";
+    const map = new Map();
+
+    // // First try to get enough suggestions based on the food pairings
+
+    for (let food of data.food_pairing) {
+      const results: any = await this.fetcher(`${baseUrl}?food=${food}`);
+
+      for (let result of results) {
+        if (map.size == 3) {
+          break;
+        }
+
+        if (data.id !== result.id) {
+          map.set(result.id, result);
+        }
+      }
+    }
+
+    if (map.size < 3) {
+      // If the food pairings didn't get enough suggestions, use the IBU (bitterness)
+      const findMatchingIbu = async (range: number) => {
+        const results: any = await this.fetcher(
+          `${baseUrl}?ibu_gt=${data.ibu - range}&ibu_lt=${data.ibu + range}`
+        );
+
+        for (let result of results) {
+          if (map.size == 3) break;
+
+          if (data.id !== result.id) {
+            map.set(result.id, result);
+          }
+        }
+
+        if (map.size < 3) {
+          // Afraid this might clash with the API ratelimit
+          return findMatchingIbu(range + 10);
+        }
+      };
+
+      await findMatchingIbu(1);
+
+      return Array.from(map.values());
+    }
+  }
+
   get apiUrl(): string {
     return `https://api.punkapi.com/v2/beers/${this.id}`;
   }
@@ -148,6 +212,7 @@ export default class Detail extends Vue {
   fn2() {
     this.methodData = this.createMethodData(this.beer);
     this.ingredientData = this.createIngredientData(this.beer);
+    this.suggestions = this.getSuggestions(this.beer);
   }
 
   createMethodData(data) {
@@ -223,6 +288,10 @@ export default class Detail extends Vue {
 
 <style lang="scss" scoped>
 .beer-page {
+  &__random-button {
+    margin-top: 2em;
+    justify-self: center;
+  }
   &__header {
     margin-bottom: 1em;
   }
@@ -235,6 +304,8 @@ export default class Detail extends Vue {
 
   &__description {
     margin-bottom: 1em;
+    justify-self: end;
+    align-self: center;
   }
 
   &__section {
