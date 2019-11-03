@@ -1,6 +1,10 @@
 <template>
   <article class="beer-article">
-    <ebc-color-display :ebc="ebc" class="beer-article__color"></ebc-color-display>
+    <ebc-color-display
+      v-show="colorDisplay && colorDisplay !== undefined"
+      :ebc="ebc"
+      class="beer-article__color"
+    ></ebc-color-display>
 
     <div class="beer-article__container">
       <header class="beer-article_header">
@@ -35,6 +39,7 @@ export default class BeerArticleCard extends Vue {
   @Prop() abv!: number;
   @Prop() ebc!: number;
   @Prop() ibu!: number;
+  @Prop({ default: true }) colorDisplay!: boolean;
 }
 </script>
 
@@ -42,6 +47,7 @@ export default class BeerArticleCard extends Vue {
 .beer-article {
   display: flex;
   width: 100%;
+  min-width: 304px;
 
   &__container {
     width: 100%;
