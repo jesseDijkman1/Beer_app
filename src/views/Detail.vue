@@ -85,6 +85,20 @@
     </section>
 
     <section-heading>Similar Beers</section-heading>
+
+    <section class="beer-page__section beer-page__section--suggestions">
+      <beer-article-card
+        v-for="beer in suggestions"
+        :key="beer.id"
+        :id="beer.id"
+        :name="beer.name"
+        :tagline="beer.tagline"
+        :abv="beer.abv"
+        :ebc="beer.ebc"
+        :ibu="beer.ibu"
+        @click.native="$router.push({name:'detail', params:{'id': beer.id}})"
+      ></beer-article-card>
+    </section>
   </div>
 </template>
 
@@ -95,6 +109,8 @@ import DataGroupList from "@/components/DataGroupList.vue";
 
 import GridList from "@/components/GridList.vue";
 import ListItemSeperator from "@/components/ListItemSeperator.vue";
+
+import BeerArticleCard from "@/components/BeerArticleCard.vue";
 
 import MainHeading from "@/components/headings/MainHeading.vue";
 import SectionHeading from "@/components/headings/SectionHeading.vue";
@@ -115,6 +131,7 @@ import DataItem from "@/components/DataItem.vue";
     DescriptionList,
     GridList,
     ListItemSeperator,
+    BeerArticleCard,
   },
 })
 export default class Detail extends Vue {
@@ -124,7 +141,7 @@ export default class Detail extends Vue {
 
   beer: object = {};
 
-  suggestions!: any;
+  suggestions: object[] = [];
 
   methodData: object = {};
   ingredientData: object = {};
@@ -157,7 +174,7 @@ export default class Detail extends Vue {
     });
   }
 
-  async getSuggestions(data) {
+  async getSuggestions(data: object) {
     const baseUrl = "https://api.punkapi.com/v2/beers/";
     const map = new Map();
 
@@ -197,11 +214,10 @@ export default class Detail extends Vue {
           return findMatchingIbu(range + 10);
         }
       };
-
       await findMatchingIbu(1);
-
-      return Array.from(map.values());
     }
+
+    return Array.from(map.values());
   }
 
   get apiUrl(): string {
@@ -209,10 +225,10 @@ export default class Detail extends Vue {
   }
 
   @Watch("beer")
-  fn2() {
+  async fn2() {
     this.methodData = this.createMethodData(this.beer);
     this.ingredientData = this.createIngredientData(this.beer);
-    this.suggestions = this.getSuggestions(this.beer);
+    this.suggestions = await this.getSuggestions(this.beer);
   }
 
   createMethodData(data) {
