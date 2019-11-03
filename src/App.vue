@@ -28,6 +28,7 @@ export default class App extends Vue {
 <style lang="scss">
 :root {
   --color-main: #ffb800;
+  --color-main-dark: rgba(255, 184, 0, 0.1);
 }
 
 * {
@@ -52,7 +53,8 @@ body {
 }
 
 #app-view {
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 a {
@@ -123,6 +125,11 @@ button:hover {
     grid-column: 2 / 3;
     min-width: 0;
   }
+}
+
+.full-width {
+  grid-column: 1 / 4;
+  max-width: 100vw;
 }
 
 @media (min-width: 400px) {
