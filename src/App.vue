@@ -1,11 +1,8 @@
 <template>
   <div id="app">
-    <main-nav></main-nav>
+    <app-navigation />
 
     <div id="app-view">
-      <app-button>Normal Button</app-button>
-      <random-beer-button>Random Button</random-beer-button>
-
       <keep-alive include="Home">
         <router-view></router-view>
       </keep-alive>
@@ -18,7 +15,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import AppFooter from "@/components/layout/AppFooter.vue";
-import AppNavigation from "@/components/layout/AppNavigation.vue";
+import AppNavigation from "@/components/layout/AppNavigation/index.vue";
 import { RouteObject } from "@/types";
 
 import AppButton from "@/components/ui/AppButton.vue";
@@ -33,7 +30,7 @@ import RandomBeerButton from "@/components/RandomBeerButton.vue";
   },
 })
 export default class App extends Vue {
-  isOpen: boolean = false;
+  // isOpen: boolean = false;
 }
 </script>
 
@@ -61,7 +58,7 @@ body {
   height: 100vh;
   width: 100vw;
   display: grid;
-  grid-auto-flow: row;
+  grid-template-rows: minmax(60px, auto) minmax(auto, calc(100vh - 60px));
 }
 
 #app-view {

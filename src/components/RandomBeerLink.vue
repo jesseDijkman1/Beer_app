@@ -1,14 +1,21 @@
 <template>
-  <router-link @click.native="setRandomId" :to="{name: 'detail', params:{id, hasRandomId: true}}">
+  <app-navigation-link
+    @click.native="setRandomId"
+    :url="{name: 'detail', params:{id, hasRandomId: true}}"
+  >
     <slot></slot>
-  </router-link>
+  </app-navigation-link>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
-@Component
-export default class RandomBeerLink extends Vue {
+import AppNavigationLink from "@/components/layout/AppNavigation/AppNavigationLink.vue";
+
+@Component({
+  components: { AppNavigationLink },
+})
+export default class extends Vue {
   id: number = Math.floor(Math.random() * 325) + 1;
 
   setRandomId() {
