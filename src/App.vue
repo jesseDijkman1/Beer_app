@@ -27,9 +27,7 @@ import AppButton from "@/components/ui/AppButton.vue";
     AppButton,
   },
 })
-export default class App extends Vue {
-  // isOpen: boolean = false;
-}
+export default class App extends Vue {}
 </script>
 
 <style lang="scss">
@@ -75,7 +73,6 @@ body {
     width: 100vw;
     height: 100vh;
     z-index: -2;
-    // opacity: 0.1;
   }
 }
 
@@ -99,21 +96,6 @@ input {
   border: none;
   background: none;
 }
-
-// Button styling
-// .beer-button {
-// color: var(--color-main);
-// border: solid 1px var(--color-main);
-// background: none;
-// padding: 0.25em 0.5em;
-// border-radius: 0.25em;
-// transition: all 0.3s ease;
-
-// &:hover {
-//   color: white;
-//   border-color: white;
-// }
-// }
 
 // Font classes (mobile first)
 .font-huge {
