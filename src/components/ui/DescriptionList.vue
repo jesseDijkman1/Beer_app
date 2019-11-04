@@ -13,14 +13,6 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 @Component
 export default class extends Vue {
   @Prop() data!: object[];
-
-  // get _data() {
-  //   if (Array.isArray(this.data)) {
-  //     return this.data;
-  //   } else {
-  //     return [this.data];
-  //   }
-  // }
 }
 </script>
 

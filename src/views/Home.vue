@@ -18,7 +18,7 @@
 
     <grid-list>
       <template v-for="beer in beers">
-        <beer-article-card
+        <beer-card
           :key="beer.id"
           :id="beer.id"
           :name="beer.name"
@@ -27,13 +27,14 @@
           :ebc="beer.ebc"
           :ibu="beer.ibu"
           @click.native="$router.push({name:'detail', params:{'id': beer.id}})"
-        ></beer-article-card>
-        <list-item-seperator :key="'seperator-' +beer.id" />
+        ></beer-card>
+
+        <horizontal-rule :key="'seperator-' + beer.id" />
       </template>
     </grid-list>
 
     <strong>
-      <router-link to="/beers/1">> See all beers</router-link>
+      <app-navigation-link url="/beers/1">> See all beers</app-navigation-link>
     </strong>
   </div>
 </template>
@@ -41,49 +42,42 @@
 <script lang="ts">
 import { Component, Watch, Vue } from "vue-property-decorator";
 
-import RandomBeerButton from "@/components/RandomBeerButton.vue";
+import fetcher from "@/modules/fetcher.ts";
 
+import RandomBeerButton from "@/components/ui/RandomBeerButton.vue";
+import AppNavigationLink from "@/components/layout/AppNavigation/AppNavigationLink.vue";
 import MainHeading from "@/components/ui/MainHeading.vue";
 import SectionHeading from "@/components/ui/SectionHeading.vue";
-
-import ListItemSeperator from "@/components/ListItemSeperator.vue";
-import BeerArticleCard from "@/components/BeerCard.vue";
-import GridList from "@/components/GridList.vue";
-import SearchBar from "@/components/SearchBar.vue";
-import SortingHandler from "@/components/SortingHandler.vue";
+import HorizontalRule from "@/components/ui/HorizontalRule.vue";
+import BeerCard from "@/components/card/BeerCard.vue";
+import GridList from "@/components/layout/GridList.vue";
+import SearchBar from "@/components/controllers/SearchBar.vue";
+import SortingHandler from "@/components/controllers/SortingHandler.vue";
 
 @Component({
   components: {
-    BeerArticleCard,
+    BeerCard,
     RandomBeerButton,
     SectionHeading,
     GridList,
     SortingHandler,
     SearchBar,
     MainHeading,
-    ListItemSeperator,
+    HorizontalRule,
+    AppNavigationLink,
   },
 })
-export default class Home extends Vue {
-  beers: object[] = [];
+export default class extends Vue {
+  beers: any = [];
+
   sortingKey: string = "id";
   ascending: boolean = true;
-
-  async getBeers(url: string) {
-    try {
-      const response = await fetch(url);
-
-      return Promise.resolve(await response.json());
-    } catch (error) {
-      throw new Error("API call failed!");
-    }
-  }
 
   async created() {
     const page: number = new Date().getDate();
     const url: string = `https://api.punkapi.com/v2/beers?page=${page}&per_page=10`;
 
-    this.beers = await this.getBeers(url);
+    this.beers = await fetcher(url);
 
     this.sortBeers();
   }
@@ -146,6 +140,11 @@ export default class Home extends Vue {
 
     animation: verticalPendulum 0.5s ease-in-out infinite alternate;
   }
+}
+
+strong {
+  text-align: center;
+  margin-top: 1em;
 }
 
 @keyframes verticalPendulum {

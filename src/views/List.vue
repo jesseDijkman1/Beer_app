@@ -33,7 +33,7 @@
           :ibu="beer.ibu"
           @click.native="$router.push({name:'detail', params:{'id': beer.id}})"
         ></beer-article-card>
-        <list-item-seperator :key="'seperator-'+ beer.id" />
+        <horizontal-rule :key="'seperator-'+ beer.id" />
       </template>
     </grid-list>
 
@@ -50,13 +50,13 @@
 
 <script lang="ts">
 import { Component, Watch, Prop, Vue } from "vue-property-decorator";
-import BeerArticleCard from "@/components/BeerCard.vue";
-import ListItemSeperator from "@/components/ListItemSeperator.vue";
-import GridList from "@/components/GridList.vue";
-import SearchBar from "@/components/SearchBar.vue";
-import FooterPagination from "@/components/FooterPagination.vue";
+import BeerArticleCard from "@/components/card/BeerCard.vue";
+import HorizontalRule from "@/components/ui/HorizontalRule.vue";
+import GridList from "@/components/layout/GridList.vue";
+import SearchBar from "@/components/controllers/SearchBar.vue";
+import FooterPagination from "@/components/controllers/FooterPagination.vue";
 import CircleLoader from "@/components/ui/CircleLoader.vue";
-import SortingHandler from "@/components/SortingHandler.vue";
+import SortingHandler from "@/components/controllers/SortingHandler.vue";
 import MainHeading from "@/components/ui/MainHeading.vue";
 
 @Component({
@@ -68,7 +68,7 @@ import MainHeading from "@/components/ui/MainHeading.vue";
     CircleLoader,
     SortingHandler,
     MainHeading,
-    ListItemSeperator,
+    HorizontalRule,
   },
 })
 export default class List extends Vue {

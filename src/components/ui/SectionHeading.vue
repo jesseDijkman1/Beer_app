@@ -18,5 +18,9 @@ export default class extends Vue {}
   border-bottom: solid 2px white;
   margin-bottom: 0.5em;
   padding-bottom: 0.25em;
+
+  &--small {
+    font-size: 0.8em;
+  }
 }
 </style>

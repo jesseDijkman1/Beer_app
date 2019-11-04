@@ -11,7 +11,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-import UnitSymbol from "@/components/UnitSymbol.vue";
+import UnitSymbol from "@/components/ui/UnitSymbol.vue";
 
 @Component({
   components: {

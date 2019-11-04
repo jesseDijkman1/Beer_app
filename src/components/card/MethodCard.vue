@@ -1,23 +1,28 @@
 <template>
-  <div class="beer-method-card">
+  <!-- <div class="beer-method-card"> -->
+  <app-card class="method-card">
     <h3 class="beer-method-card__title font-medium">
       <slot></slot>
     </h3>
     <p class="beer-method-card__description font-regular" v-if="typeof data == 'string'">{{data}}</p>
     <description-list v-else class="beer-method-card__description" :data="data" />
-  </div>
+  </app-card>
+  <!-- </div> -->
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-import DescriptionList from "@/components/DescriptionList.vue";
-import DataItem from "@/components/DataItem.vue";
+import DescriptionList from "@/components/ui/DescriptionList.vue";
+import DataItem from "@/components/ui/DataItem.vue";
+
+import AppCard from "./index.vue";
 
 @Component({
   components: {
     DescriptionList,
     DataItem,
+    AppCard,
   },
 })
 export default class extends Vue {
@@ -26,12 +31,10 @@ export default class extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.beer-method-card {
-  border: solid 1px rgba(255, 255, 255, 0.2);
+.method-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.5em 0;
 
   &__title {
     font-family: Calibri, Arial, sans-serif;

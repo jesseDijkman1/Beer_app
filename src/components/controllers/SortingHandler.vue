@@ -1,8 +1,8 @@
 <template>
   <div class="sorting-handler font-medium" :class="{'is-active': isActive}">
-    <button @click="isActive = !isActive" class="sorting-handler__button beer-button font-medium">
+    <app-button class="sorting-handler__button" @click="isActive = !isActive">
       <slot></slot>
-    </button>
+    </app-button>
     <div class="sorting-handler__options">
       <button
         :key="i"
@@ -22,7 +22,13 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-@Component
+import AppButton from "@/components/ui/AppButton.vue";
+
+@Component({
+  components: {
+    AppButton,
+  },
+})
 export default class SortingHandler extends Vue {
   @Prop() options!: string[];
 

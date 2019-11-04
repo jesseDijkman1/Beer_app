@@ -1,35 +1,38 @@
 <template>
-  <article class="beer-article">
+  <app-card class="beer-card">
     <ebc-color-display
       v-show="colorDisplay && colorDisplay !== undefined"
       :ebc="ebc"
-      class="beer-article__color"
+      class="beer-card__color"
     ></ebc-color-display>
 
-    <div class="beer-article__container">
-      <header class="beer-article_header">
-        <h1 class="beer-article__title font-large">{{name}}</h1>
-        <p class="beer-article__tagline font-regular">{{tagline}}</p>
+    <div class="beer-card__container">
+      <header class="beer-card_header">
+        <h1 class="beer-card__title font-large">{{name}}</h1>
+        <p class="beer-card__tagline font-regular">{{tagline}}</p>
       </header>
 
-      <footer class="beer-article__footer">
+      <footer class="beer-card__footer">
         <data-item name="ABV" :value="abv" />
         <data-item name="IBU" :value="ibu" />
         <data-item name="EBC" :value="ebc" />
       </footer>
     </div>
-  </article>
+  </app-card>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import EbcColorDisplay from "@/components/EbcColorDisplay.vue";
-import DataItem from "@/components/DataItem.vue";
+import EbcColorDisplay from "@/components/ui/EbcColorDisplay.vue";
+import DataItem from "@/components/ui/DataItem.vue";
+
+import AppCard from "./index.vue";
 
 @Component({
   components: {
     EbcColorDisplay,
     DataItem,
+    AppCard,
   },
 })
 export default class BeerArticleCard extends Vue {
@@ -44,7 +47,7 @@ export default class BeerArticleCard extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.beer-article {
+.beer-card {
   display: flex;
   width: 100%;
   min-width: 304px;

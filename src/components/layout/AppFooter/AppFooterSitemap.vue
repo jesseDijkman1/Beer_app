@@ -1,11 +1,11 @@
 <template>
-  <footer>
+  <section class="sitemap">
     <ul>
-      <li v-bind:key="route.name" v-for="route in routes">
+      <li class="font-regular" v-bind:key="route.name" v-for="route in routes">
         <router-link :to="route.path">{{route.name}}</router-link>
       </li>
     </ul>
-  </footer>
+  </section>
 </template>
 
 
@@ -13,7 +13,13 @@
 import { Component, Vue } from "vue-property-decorator";
 import { RouteObject } from "@/types";
 
-@Component
+import AppNavigationLink from "@/components/layout/AppNavigation/AppNavigationLink.vue";
+
+@Component({
+  components: {
+    AppNavigationLink,
+  },
+})
 export default class extends Vue {
   routes!: RouteObject[];
 
@@ -28,3 +34,8 @@ export default class extends Vue {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.sitemap {
+}
+</style>

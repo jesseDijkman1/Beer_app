@@ -1,5 +1,5 @@
 <template>
-  <span class="list-seperator"></span>
+  <hr class="horizontal-rule" />
 </template>
 
 <script lang="ts">
@@ -10,9 +10,9 @@ export default class extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-.list-seperator {
-  display: flex;
-  align-items: stretch;
+.horizontal-rule {
+  display: block;
+  border: 0;
   height: 1px;
   background-image: linear-gradient(
     to right,

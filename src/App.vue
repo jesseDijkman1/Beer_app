@@ -7,26 +7,24 @@
         <router-view></router-view>
       </keep-alive>
 
-      <site-map class="grid-base"></site-map>
+      <app-footer class="grid-base"></app-footer>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import AppFooter from "@/components/layout/AppFooter.vue";
+import AppFooter from "@/components/layout/AppFooter/index.vue";
 import AppNavigation from "@/components/layout/AppNavigation/index.vue";
 import { RouteObject } from "@/types";
 
 import AppButton from "@/components/ui/AppButton.vue";
-import RandomBeerButton from "@/components/RandomBeerButton.vue";
 
 @Component({
   components: {
     AppFooter,
     AppNavigation,
     AppButton,
-    RandomBeerButton,
   },
 })
 export default class App extends Vue {
@@ -50,7 +48,7 @@ body {
   font-family: "Avenir next", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: black;
+  background-color: black;
   color: white;
 }
 
@@ -59,6 +57,26 @@ body {
   width: 100vw;
   display: grid;
   grid-template-rows: minmax(60px, auto) minmax(auto, calc(100vh - 60px));
+
+  &::before {
+    content: "";
+    display: block;
+    position: fixed;
+    background-color: black;
+    background-image: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.5) 0%,
+        rgba(0, 0, 0, 0.8) 30%,
+        rgba(0, 0, 0, 1) 100%
+      ),
+      url("https://rf-hobby.cz/wp-content/uploads/691.jpg");
+    background-size: cover;
+    background-blend-mode: luminosity;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2;
+    // opacity: 0.1;
+  }
 }
 
 #app-view {

@@ -38,35 +38,32 @@
         <div class="ingredient-category">
           <h3 class="ingredient-category__title font-medium">Malt</h3>
           <grid-list :multiple-columns="true">
-            <div
-              class="ingredient-card"
+            <ingredient-card
+              :ingredient="malt"
               :key="'malt-'+index"
               v-for="(malt, index) in ingredientData.malt"
-            >
-              <description-list :data="malt" />
-            </div>
+            />
           </grid-list>
         </div>
 
         <div class="ingredients-category">
           <h3 class="ingredient-category__title font-medium">Hops</h3>
           <grid-list :multiple-columns="true">
-            <div
-              class="ingredient-card"
+
+            <ingredient-card
+              :ingredient="hops"
               :key="'hops-'+index"
               v-for="(hops, index) in ingredientData.hops"
-            >
-              <description-list :data="hops" />
-            </div>
+            />
           </grid-list>
         </div>
 
         <div class="ingredients-category">
           <h3 class="ingredient-category__title font-medium">Yeast</h3>
           <grid-list>
-            <div class="ingredient-card">
+            <ingredient-card>
               <p class="font-regular">{{ingredientData.yeast}}</p>
-            </div>
+            </ingredient-card>
           </grid-list>
         </div>
       </grid-list>
@@ -109,22 +106,24 @@
 
 <script lang="ts">
 import { Component, Watch, Prop, Vue } from "vue-property-decorator";
-import RandomBeerButton from "@/components/RandomBeerButton.vue";
-import DataGroupList from "@/components/DataGroupList.vue";
+import RandomBeerButton from "@/components/ui/RandomBeerButton.vue";
+import DataGroupList from "@/components/ui/DataGroupList.vue";
 
-import GridList from "@/components/GridList.vue";
-import ListItemSeperator from "@/components/ListItemSeperator.vue";
+import GridList from "@/components/layout/GridList.vue";
+// import HorizontalRule from "@/components/ui/HorizontalRule.vue";
 
-import BeerArticleCard from "@/components/BeerCard.vue";
-import BeerArticleCarousel from "@/components/AppCarousel.vue";
+import BeerArticleCard from "@/components/card/BeerCard.vue";
+import IngredientCard from "@/components/card/IngredientCard.vue";
+
+import BeerArticleCarousel from "@/components/ui/AppCarousel.vue";
 
 import MainHeading from "@/components/ui/MainHeading.vue";
 import SectionHeading from "@/components/ui/SectionHeading.vue";
 
-import BeerMethodCard from "@/components/MethodCard.vue";
-import DescriptionList from "@/components/DescriptionList.vue";
+import BeerMethodCard from "@/components/card/MethodCard.vue";
+import DescriptionList from "@/components/ui/DescriptionList.vue";
 
-import DataItem from "@/components/DataItem.vue";
+import DataItem from "@/components/ui/DataItem.vue";
 
 @Component({
   components: {
@@ -136,7 +135,8 @@ import DataItem from "@/components/DataItem.vue";
     BeerMethodCard,
     DescriptionList,
     GridList,
-    ListItemSeperator,
+    IngredientCard,
+    // HorizontalRule,
     BeerArticleCard,
     BeerArticleCarousel,
   },
@@ -332,7 +332,7 @@ export default class Detail extends Vue {
   }
 
   &__section {
-    margin-bottom: 3em;
+    padding-bottom: 3em;
 
     &--data {
       display: grid;
@@ -343,7 +343,8 @@ export default class Detail extends Vue {
 
     &--suggestions {
       background: var(--color-main);
-      padding: 1em 0;
+      // padding: 1em 0;
+      padding-top: 1em;
 
       &__title {
         color: black;
@@ -368,11 +369,10 @@ export default class Detail extends Vue {
 }
 
 .ingredient-card {
-  border: solid 1px rgba(255, 255, 255, 0.2);
+  // border: solid 1px rgba(255, 255, 255, 0.2);
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.5em 0;
 }
 
 .food-pairing-list {
@@ -402,41 +402,4 @@ export default class Detail extends Vue {
     margin-right: 0.5em;
   }
 }
-
-// .beer-page__section {
-//   display: flex;
-//   flex-wrap: wrap;
-// }
-// .inner-grid {
-//   display: grid;
-//   grid-template-columns: minmax(320px, 2fr) 1fr;
-// }
-
-// .beer-description {
-//   max-width: 40em;
-//   margin: 2em 0;
-// }
-
-// .section--method {
-//   background: var(--color-main);
-//   padding: 2em 0;
-//   // display: flex;
-
-//   .section-heading {
-//     color: black;
-//     border-color: white;
-//     margin-bottom: 1em;
-//   }
-// }
-
-// .flexbox-grid {
-//   display: flex;
-//   flex-wrap: wrap;
-// }
-
-// .auto-columns {
-//   display: grid;
-//   grid-auto-flow: column;
-//   justify-items: center;
-// }
 </style>
