@@ -13,6 +13,8 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
+import { ItemData } from "@/types";
+
 import UnitSymbol from "@/components/ui/UnitSymbol.vue";
 
 @Component({
@@ -21,9 +23,9 @@ import UnitSymbol from "@/components/ui/UnitSymbol.vue";
   },
 })
 export default class extends Vue {
-  @Prop() data!: object[];
+  @Prop({ type: [Object, Array] }) private readonly data!: ItemData[];
 
-  get dataList() {
+  private get dataList(): ItemData[] {
     if (Array.isArray(this.data)) {
       return this.data;
     } else {

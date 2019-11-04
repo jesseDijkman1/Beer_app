@@ -8,7 +8,7 @@
         :key="i"
         v-for="(option, i) in options"
         class="sorting-handler__option font-regular"
-        :class="{'is-current': current == option}"
+        :class="{'is-current': current === option}"
         :style="{transitionDelay: `${i / 20}s`}"
         @click="sort(option)"
       >
@@ -29,13 +29,13 @@ import AppButton from "@/components/ui/AppButton.vue";
     AppButton,
   },
 })
-export default class SortingHandler extends Vue {
-  @Prop() options!: string[];
+export default class extends Vue {
+  @Prop({ type: Array, required: true }) private readonly options!: string[];
 
-  current: string = "";
-  isActive: boolean = false;
+  private current: string = "";
+  private isActive: boolean = false;
 
-  sort(val: string) {
+  private sort(val: string): void {
     this.current = val;
 
     this.$emit("sortBy", val);

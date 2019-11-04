@@ -17,7 +17,7 @@ import AppButton from "@/components/ui/AppButton.vue";
   },
 })
 export default class extends Vue {
-  randomId(): number {
+  private randomId(): number {
     return Math.floor(Math.random() * 325) + 1;
   }
 }

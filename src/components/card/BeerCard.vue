@@ -35,14 +35,14 @@ import AppCard from "./index.vue";
     AppCard,
   },
 })
-export default class BeerArticleCard extends Vue {
-  @Prop() id!: number;
-  @Prop({ default: "?" }) name!: string;
-  @Prop() tagline!: string;
-  @Prop() abv!: number;
-  @Prop() ebc!: number;
-  @Prop() ibu!: number;
-  @Prop({ default: true }) colorDisplay!: boolean;
+export default class extends Vue {
+  @Prop({ default: "?", type: String }) private readonly name!: string;
+  @Prop({ default: "", type: String }) private readonly tagline!: string;
+  @Prop({ type: Number }) private readonly abv!: number;
+  @Prop({ type: Number }) private readonly ebc!: number;
+  @Prop({ type: Number }) private readonly ibu!: number;
+  @Prop({ default: true, type: Boolean })
+  private readonly colorDisplay!: boolean;
 }
 </script>
 

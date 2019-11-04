@@ -3,7 +3,7 @@
     <header class="article-carousel__dots">
       <span
         class="article-carousel__dot"
-        :class="{'is-visible': visibleCard && visibleCard == n}"
+        :class="{'is-visible': visibleCard && visibleCard === n}"
         :key="'dot-' + n"
         v-for="n in items"
       ></span>
@@ -11,7 +11,7 @@
     <div class="article-carousel__container">
       <div class="article-carousel__articles">
         <div
-          :class="{'is-visible': visibleCard && visibleCard == n}"
+          :class="{'is-visible': visibleCard && visibleCard === n}"
           class="article-carousel__article"
           :data-index="n"
           :key="n"
@@ -29,15 +29,19 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class extends Vue {
-  @Prop() items!: number;
+  @Prop({ required: true, type: Number }) private readonly items!: number;
 
-  visibleCard: number = 0;
+  private visibleCard: number = 0;
 
-  mounted() {
-    const container = this.$el.querySelector(".article-carousel__container");
-    const elements = this.$el.querySelectorAll(".article-carousel__article");
+  private mounted(): void {
+    const container: HTMLElement | null = this.$el.querySelector(
+      ".article-carousel__container"
+    );
+    const elements: NodeListOf<Element> = this.$el.querySelectorAll(
+      ".article-carousel__article"
+    );
 
-    const options = {
+    const options: object = {
       root: container,
       threshold: 0.75,
       rootMargin: "0px",
@@ -45,14 +49,14 @@ export default class extends Vue {
 
     const observer = new IntersectionObserver(this.setVisibleCard, options);
 
-    for (let element of elements) {
+    for (const element of elements) {
       observer.observe(element);
     }
   }
 
-  setVisibleCard(entries, observer) {
+  private setVisibleCard(entries: any, observer: any): void {
     if (this.visibleCard !== 0) {
-      entries.forEach(entry => {
+      entries.forEach((entry: any) => {
         if (!entry.isIntersecting) {
           return;
         }

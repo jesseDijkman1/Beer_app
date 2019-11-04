@@ -20,6 +20,6 @@ import AppCard from "./index.vue";
   },
 })
 export default class extends Vue {
-  @Prop() ingredient!: object;
+  @Prop({ type: Array }) private readonly ingredient!: object[];
 }
 </script>

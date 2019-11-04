@@ -7,9 +7,9 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class extends Vue {
-  @Prop({ default: "" }) unit!: string;
+  @Prop({ default: "", type: String }) private readonly unit!: string;
 
-  get unitSymbol() {
+  private get unitSymbol(): string {
     switch (this.unit) {
       case "percentage":
         return "%";
@@ -30,9 +30,9 @@ export default class extends Vue {
 
 <style lang="scss" scoped>
 .unit-symbol {
-  font-size: 0.4em;
+  font-size: 0.5em;
   display: block;
   align-self: flex-end;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.3em;
 }
 </style>

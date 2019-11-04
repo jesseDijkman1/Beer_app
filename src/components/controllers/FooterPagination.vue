@@ -1,7 +1,7 @@
 <template>
   <footer class="footer-pagination">
     <button
-      :class="{'is-hidden': Number(currentPage) == 1}"
+      :class="{'is-hidden': Number(currentPage) === 1}"
       @click="previousPage"
       class="footer-pagination__button footer-pagination__button--back"
     ></button>
@@ -10,13 +10,13 @@
         class="footer-pagination__page"
         :key="n"
         v-for="n in pages"
-        :class="{'is-active': n == currentPage}"
+        :class="{'is-active': n === currentPage}"
       >
         <router-link :to="url + n">{{n}}</router-link>
       </li>
     </ol>
     <button
-      :class="{'is-hidden': Number(currentPage) == totalPages}"
+      :class="{'is-hidden': Number(currentPage) === totalPages}"
       @click="nextPage"
       class="footer-pagination__button footer-pagination__button--next"
     ></button>
@@ -27,27 +27,31 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
-export default class FooterPagination extends Vue {
-  @Prop() url!: string;
-  @Prop() currentPage!: string;
-  @Prop() perPage!: number;
-  @Prop() totalEntries!: number;
-  @Prop({ default: Infinity }) maxLength!: number;
+export default class extends Vue {
+  @Prop({ required: true, type: String }) private readonly url!: string;
+  @Prop({ required: true, type: [Number, String] })
+  private readonly currentPage!: string;
+  @Prop({ default: 10, type: Number }) private readonly perPage!: number;
+  @Prop({ required: true, type: Number })
+  private readonly totalEntries!: number;
+  @Prop({ default: Infinity }) private readonly maxLength!: number;
 
-  totalPages: number = Math.ceil(this.totalEntries / this.perPage);
+  private readonly totalPages: number = Math.ceil(
+    this.totalEntries / this.perPage
+  );
 
-  get pages(): number[] | number {
-    if (this.maxLength == Infinity) {
+  private get pages(): number[] | number {
+    if (this.maxLength === Infinity) {
       return this.totalPages;
     }
 
     const array: number[] = [];
 
-    const loopStart = -Math.floor(this.maxLength / 2);
-    const loopEnd = Math.ceil(this.maxLength / 2);
+    const loopStart: number = -Math.floor(this.maxLength / 2);
+    const loopEnd: number = Math.ceil(this.maxLength / 2);
 
     for (let i = loopStart; i < loopEnd; i++) {
-      let n: number = i + parseInt(this.currentPage);
+      let n: number = i + parseInt(this.currentPage, 10);
 
       if (n <= 0) {
         n += this.maxLength;
@@ -63,16 +67,16 @@ export default class FooterPagination extends Vue {
     return array.sort((a, b) => a - b);
   }
 
-  previousPage() {
-    const current = Number(this.currentPage);
+  private previousPage(): void {
+    const current: number = Number(this.currentPage);
 
     if (current > 1) {
       this.$router.push(this.url + (current - 1));
     }
   }
 
-  nextPage() {
-    const current = Number(this.currentPage);
+  private nextPage(): void {
+    const current: number = Number(this.currentPage);
 
     if (current < this.totalPages) {
       this.$router.push(this.url + (current + 1));

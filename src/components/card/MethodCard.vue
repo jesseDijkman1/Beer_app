@@ -1,13 +1,11 @@
 <template>
-  <!-- <div class="beer-method-card"> -->
   <app-card class="method-card">
     <h3 class="beer-method-card__title font-medium">
       <slot></slot>
     </h3>
-    <p class="beer-method-card__description font-regular" v-if="typeof data == 'string'">{{data}}</p>
+    <p class="beer-method-card__description font-regular" v-if="typeof data === 'string'">{{data}}</p>
     <description-list v-else class="beer-method-card__description" :data="data" />
   </app-card>
-  <!-- </div> -->
 </template>
 
 <script lang="ts">
@@ -26,7 +24,8 @@ import AppCard from "./index.vue";
   },
 })
 export default class extends Vue {
-  @Prop() data!: object[] | object | string;
+  @Prop({ default: "", required: true, type: [Array, String] })
+  private readonly data!: object[] | string;
 }
 </script>
 

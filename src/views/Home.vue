@@ -45,6 +45,7 @@ import { Component, Watch, Vue } from "vue-property-decorator";
 import { APIData } from "@/types";
 
 import fetcher from "@/modules/fetcher.ts";
+import sorter from "@/modules/sorting.ts";
 
 import RandomBeerButton from "@/components/ui/RandomBeerButton.vue";
 import AppNavigationLink from "@/components/layout/AppNavigation/AppNavigationLink.vue";
@@ -75,16 +76,16 @@ export default class extends Vue {
   private sortingKey: string = "id";
   private ascending: boolean = true;
 
-  async created(): Promise<void> {
+  private async created(): Promise<void> {
     const page: number = new Date().getDate();
     const url: string = `https://api.punkapi.com/v2/beers?page=${page}&per_page=10`;
 
     this.beers = await fetcher(url);
 
-    this.sortBeers();
+    sorter<APIData>(this.beers, this.sortingKey, this.ascending);
   }
 
-  setSorting(key: string): void {
+  private setSorting(key: string): void {
     if (key === this.sortingKey) {
       this.ascending = !this.ascending;
     } else {
@@ -96,26 +97,26 @@ export default class extends Vue {
   // Watch two values at once (seems to work)
   @Watch("sortingKey")
   @Watch("ascending")
-  fn(): void {
-    this.sortBeers();
+  private fn(): void {
+    sorter<APIData>(this.beers, this.sortingKey, this.ascending);
   }
 
-  sortBeers(): void {
-    this.beers.sort((_a: APIData | any, _b: APIData | any) => {
-      const b: string | number = _b[this.sortingKey];
-      const a: string | number = _a[this.sortingKey];
+  // private sortBeers(): void {
+  //   this.beers.sort((_a: APIData | any, _b: APIData | any) => {
+  //     const b: string | number = _b[this.sortingKey];
+  //     const a: string | number = _a[this.sortingKey];
 
-      if (a > b) {
-        return this.ascending ? 1 : -1;
-      }
+  //     if (a > b) {
+  //       return this.ascending ? 1 : -1;
+  //     }
 
-      if (b > a) {
-        return this.ascending ? -1 : 1;
-      }
+  //     if (b > a) {
+  //       return this.ascending ? -1 : 1;
+  //     }
 
-      return 0;
-    });
-  }
+  //     return 0;
+  //   });
+  // }
 }
 </script>
 

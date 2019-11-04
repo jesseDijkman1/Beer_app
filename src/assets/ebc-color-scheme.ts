@@ -55,4 +55,4 @@ export default [
     value: 138,
     color: [0, 0, 0]
   }
-]
+];

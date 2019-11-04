@@ -9,14 +9,16 @@ import { Component, Watch, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class extends Vue {
-  @Prop({ default: "/", type: [String, Object] }) readonly url!: string;
-  @Prop({ default: "", type: String }) readonly name!: string;
+  @Prop({ default: "/", type: [String, Object], required: true })
+  private readonly url!: string;
+  @Prop({ default: "", type: String, required: false })
+  private readonly name!: string;
 
-  isActive: boolean = false;
+  private isActive: boolean = false;
 
   @Watch("$route", { immediate: true })
-  checkRoute() {
-    this.isActive = this.$router.currentRoute.name == this.name;
+  private checkRoute(): void {
+    this.isActive = this.$router.currentRoute.name === this.name;
   }
 }
 </script>

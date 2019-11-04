@@ -14,21 +14,21 @@ export interface UnitValue {
 }
 
 export interface MethodData {
-  mash_temp: {
-    temp: UnitValue,
+  mash_temp: Array<{
+    temp: UnitValue;
     duration: number;
-  }[];
+  }>;
   fermentation: {
-    temp: UnitValue,
+    temp: UnitValue;
   };
-  twist: string | null
+  twist: string | null;
 }
 
 export interface IngredientData {
-  name: string
-  amount: UnitValue
-  add?: string
-  attribute?: string
+  name: string;
+  amount: UnitValue;
+  add?: string;
+  attribute?: string;
 }
 
 export interface APIData {
@@ -45,10 +45,10 @@ export interface APIData {
   ph: number;
   method: MethodData;
   ingredients: {
-    malt: IngredientData[]
-    hops: IngredientData[]
-    yeast: string
-  }
+    malt: IngredientData[];
+    hops: IngredientData[];
+    yeast: string;
+  };
   food_pairing: string[];
 }
 

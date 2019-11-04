@@ -143,20 +143,23 @@ import DataItem from "@/components/ui/DataItem.vue";
   },
 })
 export default class Detail extends Vue {
-  @Prop() private readonly id!: number | boolean;
-  @Prop() data!: APIData;
-  @Prop({ default: false }) hasRandomId!: boolean;
+  @Prop({ required: true, type: [Number, String] }) private readonly id!:
+    | number
+    | string;
+  @Prop({ type: Object }) private readonly data!: APIData;
+  @Prop({ default: false, type: Boolean })
+  private readonly hasRandomId!: boolean;
 
-  beer: APIData | any = {};
+  private beer: APIData | any = {};
 
-  suggestions: APIData[] = [];
+  private suggestions: APIData[] = [];
 
-  methodData: MethodData | any = {};
-  ingredientData: IngredientData[] | any = [];
+  private methodData: MethodData | any = {};
+  private ingredientData: IngredientData[] | any = [];
 
   @Watch("id", { immediate: true })
-  async fn(): Promise<void> {
-    if (this.data == undefined) {
+  private async fn(): Promise<void> {
+    if (this.data === undefined) {
       const beer: [APIData, any] | any = await fetcher(this.apiUrl);
 
       this.beer = beer[0];
@@ -165,17 +168,17 @@ export default class Detail extends Vue {
     }
   }
 
-  async getSuggestions(data: APIData): Promise<APIData[]> {
+  private async getSuggestions(data: APIData): Promise<APIData[]> {
     const baseUrl: string = "https://api.punkapi.com/v2/beers/";
-    const map = new Map();
+    const map: any = new Map();
 
     // // First try to get enough suggestions based on the food pairings
 
-    for (let food of data.food_pairing) {
+    for (const food of data.food_pairing) {
       const results: APIData[] | any = await fetcher(`${baseUrl}?food=${food}`);
 
-      for (let result of results) {
-        if (map.size == 3) {
+      for (const result of results) {
+        if (map.size === 3) {
           break;
         }
 
@@ -187,13 +190,17 @@ export default class Detail extends Vue {
 
     if (map.size < 3) {
       // If the food pairings didn't get enough suggestions, use the IBU (bitterness)
-      const findMatchingIbu = async (range: number): Promise<void> => {
+      const findMatchingIbu: any = async (range: number): Promise<any> => {
         const results: APIData[] | any = await fetcher(
-          `${baseUrl}?ibu_gt=${data.ibu - range}&ibu_lt=${data.ibu + range}`
+          `${baseUrl}?ibu_gt=${
+            data.ibu - range > 0 ? data.ibu - range : 0
+          }&ibu_lt=${data.ibu + range}`
         );
 
-        for (let result of results) {
-          if (map.size == 3) break;
+        for (const result of results) {
+          if (map.size === 3) {
+            break;
+          }
 
           if (data.id !== result.id) {
             map.set(result.id, result);
@@ -211,18 +218,18 @@ export default class Detail extends Vue {
     return Array.from(map.values());
   }
 
-  get apiUrl(): string {
+  private get apiUrl(): string {
     return `https://api.punkapi.com/v2/beers/${this.id}`;
   }
 
   @Watch("beer")
-  async fn2(): Promise<void> {
+  private async fn2(): Promise<void> {
     this.methodData = this.createMethodData(this.beer);
     this.ingredientData = this.createIngredientData(this.beer);
     this.suggestions = await this.getSuggestions(this.beer);
   }
 
-  createMethodData(
+  private createMethodData(
     data: APIData
   ): { mash_temp: ItemData[]; fermentation: ItemData[]; twist: string } {
     return {
@@ -249,7 +256,7 @@ export default class Detail extends Vue {
     };
   }
 
-  createIngredientData(
+  private createIngredientData(
     data: APIData
   ): { malt: ItemData[]; hops: ItemData[]; yeast: string } {
     return {

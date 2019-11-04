@@ -19,9 +19,12 @@ import UnitSymbol from "@/components/ui/UnitSymbol.vue";
   },
 })
 export default class extends Vue {
-  @Prop() name!: string;
-  @Prop() value!: number | number;
-  @Prop() unit!: string;
+  @Prop({ type: String }) private readonly name!: string;
+  @Prop({ type: [String, Number] }) private readonly value!:
+    | number
+    | string
+    | null;
+  @Prop({ default: "", type: String }) private readonly unit!: string;
 }
 </script>
 
@@ -41,6 +44,7 @@ export default class extends Vue {
     font-size: calc(18px + (40 - 18) * ((100vw - 320px) / (1600 - 320)));
     font-weight: bold;
     margin-bottom: 0.25em;
+    display: flex;
   }
 }
 </style>

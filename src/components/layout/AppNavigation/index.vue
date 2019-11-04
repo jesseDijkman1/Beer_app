@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Watch, Vue } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 
 import AppNavigationLink from "./AppNavigationLink.vue";
 import AppNavigationHamburger from "./AppNavigationHamburger.vue";
@@ -30,16 +30,16 @@ import AppNavigationHamburger from "./AppNavigationHamburger.vue";
   },
 })
 export default class extends Vue {
-  currentRoute: string = "";
-  isOpen: boolean = false;
+  private currentRoute: string = "";
+  private isOpen: boolean = false;
 
-  randomId: number = Math.floor(Math.random() * 325) + 1;
+  private randomId: number = Math.floor(Math.random() * 325) + 1;
 
-  created() {
+  private created(): void {
     this.currentRoute = this.$router.currentRoute.name || "";
   }
 
-  setRandomId() {
+  private setRandomId(): void {
     this.randomId = Math.floor(Math.random() * 325) + 1;
   }
 }

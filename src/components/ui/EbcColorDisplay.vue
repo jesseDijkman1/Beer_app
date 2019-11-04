@@ -8,10 +8,12 @@ import colorScaler from "@/modules/color-scaler.ts";
 import ebcColorScheme from "@/assets/ebc-color-scheme.ts";
 
 @Component
-export default class EbcColorDisplay extends Vue {
-  @Prop() ebc!: number;
+export default class extends Vue {
+  @Prop({ type: Number }) private readonly ebc!: number;
 
-  getColorFromEbc: Function = colorScaler(ebcColorScheme);
+  private getColorFromEbc: (value: number) => void = colorScaler(
+    ebcColorScheme
+  );
 }
 </script>
 

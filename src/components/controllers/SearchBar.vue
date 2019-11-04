@@ -14,17 +14,18 @@
 import { Component, Prop, Watch, Vue } from "vue-property-decorator";
 
 @Component
-export default class SearchBar extends Vue {
-  @Prop({ default: "Search ..." }) placeholder!: string;
-  @Prop({ default: false }) autoSearch!: boolean;
-  @Prop() delay!: number;
+export default class extends Vue {
+  @Prop({ default: "Search ...", type: String })
+  private readonly placeholder!: string;
+  @Prop({ default: false, type: Boolean })
+  private readonly autoSearch!: boolean;
+  @Prop({ default: 1000, type: Number }) private readonly delay!: number;
 
-  value: string = "";
-  lastValue: string = "";
-  timeout: any;
+  private value: string = "";
+  private timeout: any;
 
   @Watch("value")
-  fn() {
+  private fn(): void {
     if (!this.autoSearch) {
       return;
     }

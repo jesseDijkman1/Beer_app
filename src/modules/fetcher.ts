@@ -1,12 +1,14 @@
-export default function (url: string) {
+function fetcher(url: string) {
   return new Promise(async (resolve, reject): Promise<any> => {
     try {
       const response = await fetch(url);
-      const results = await response.json()
+      const results = await response.json();
 
-      resolve(results)
+      resolve(results);
     } catch (error) {
       throw new Error("API call failed!");
     }
-  })
+  });
 }
+
+export default fetcher;
