@@ -12,7 +12,6 @@ const routes = [
   },
   {
     path: "/beers/:page",
-    name: "beers",
     component: () => import("@/views/List.vue"),
     props: true
   },

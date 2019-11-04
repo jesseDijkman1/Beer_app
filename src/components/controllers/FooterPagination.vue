@@ -10,7 +10,7 @@
         class="footer-pagination__page"
         :key="n"
         v-for="n in pages"
-        :class="{'is-active': n === currentPage}"
+        :class="{'is-active': n === Number(currentPage)}"
       >
         <router-link :to="url + n">{{n}}</router-link>
       </li>
@@ -94,6 +94,7 @@ export default class extends Vue {
   // justify-content: center;
   align-items: center;
   font-size: 1.5rem;
+  margin-bottom: 1em;
 
   &__button {
     background: none;
