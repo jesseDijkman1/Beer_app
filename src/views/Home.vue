@@ -1,12 +1,12 @@
 <template>
   <div class="grid-base">
-    <div class="home-header">
+    <header class="home-header">
       <main-heading>For the brewers</main-heading>
 
       <random-beer-button>Random Beer</random-beer-button>
 
       <span>&#8609;</span>
-    </div>
+    </header>
 
     <section-heading>Beers of the day</section-heading>
 
@@ -42,6 +42,8 @@
 <script lang="ts">
 import { Component, Watch, Vue } from "vue-property-decorator";
 
+import { APIData } from "@/types";
+
 import fetcher from "@/modules/fetcher.ts";
 
 import RandomBeerButton from "@/components/ui/RandomBeerButton.vue";
@@ -68,12 +70,12 @@ import SortingHandler from "@/components/controllers/SortingHandler.vue";
   },
 })
 export default class extends Vue {
-  beers: any = [];
+  private beers: APIData[] | any = [];
 
-  sortingKey: string = "id";
-  ascending: boolean = true;
+  private sortingKey: string = "id";
+  private ascending: boolean = true;
 
-  async created() {
+  async created(): Promise<void> {
     const page: number = new Date().getDate();
     const url: string = `https://api.punkapi.com/v2/beers?page=${page}&per_page=10`;
 
@@ -82,7 +84,7 @@ export default class extends Vue {
     this.sortBeers();
   }
 
-  setSorting(key: string) {
+  setSorting(key: string): void {
     if (key === this.sortingKey) {
       this.ascending = !this.ascending;
     } else {
@@ -94,14 +96,14 @@ export default class extends Vue {
   // Watch two values at once (seems to work)
   @Watch("sortingKey")
   @Watch("ascending")
-  fn() {
+  fn(): void {
     this.sortBeers();
   }
 
-  sortBeers() {
-    this.beers.sort((_a: any, _b: any) => {
-      let b: string | number = _b[this.sortingKey];
-      let a: string | number = _a[this.sortingKey];
+  sortBeers(): void {
+    this.beers.sort((_a: APIData | any, _b: APIData | any) => {
+      const b: string | number = _b[this.sortingKey];
+      const a: string | number = _a[this.sortingKey];
 
       if (a > b) {
         return this.ascending ? 1 : -1;
@@ -113,12 +115,6 @@ export default class extends Vue {
 
       return 0;
     });
-  }
-
-  search(value: string) {
-    if (!value) {
-      console.log("Reset");
-    }
   }
 }
 </script>

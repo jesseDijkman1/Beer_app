@@ -11,7 +11,7 @@ function filterScheme(_value: number, scheme: ColorScheme[]): ColorScheme[] {
     .sort((a, b) => a.value - b.value)
     .shift()!
 
-  return [higher || lower, lower || higher]
+  return [higher || lower, lower || higher];
 }
 
 function colorTransitionArray(array: ColorScheme[]): number[] {

@@ -50,6 +50,11 @@
 
 <script lang="ts">
 import { Component, Watch, Prop, Vue } from "vue-property-decorator";
+
+import { APIData } from "@/types";
+
+import fetcher from "@/modules/fetcher.ts";
+
 import BeerArticleCard from "@/components/card/BeerCard.vue";
 import HorizontalRule from "@/components/ui/HorizontalRule.vue";
 import GridList from "@/components/layout/GridList.vue";
@@ -72,65 +77,55 @@ import MainHeading from "@/components/ui/MainHeading.vue";
   },
 })
 export default class List extends Vue {
-  @Prop({ default: 1 }) page!: number;
+  @Prop({ default: 1 }) private readonly page!: number;
 
-  perPage: number = 25;
-  beers: object[] = [];
-  isSearched: boolean = false;
-  loading: boolean = false;
+  private readonly perPage: number = 25;
+  private beers: APIData[] | any = [];
+  private isSearched: boolean = false;
+  private loading: boolean = false;
 
-  sortingKey: string = "id";
-  ascending: boolean = true;
+  private sortingKey: string = "id";
+  private ascending: boolean = true;
 
-  blockReset: boolean = false;
+  private blockReset: boolean = false;
 
-  async getBeers(url: string) {
-    try {
-      const response = await fetch(url);
-
-      return Promise.resolve(await response.json());
-    } catch (error) {
-      throw new Error("API call failed!");
-    }
-  }
-
-  get url() {
+  get url(): string {
     return `https://api.punkapi.com/v2/beers?page=${this.page}&per_page=${this.perPage}`;
   }
 
-  async reset() {
+  async reset(): Promise<void> {
     this.loading = true;
 
     if (!this.blockReset) {
       this.blockReset = true;
 
-      this.beers = await this.getBeers(this.url);
+      this.beers = await fetcher(this.url);
     }
 
     this.loading = false;
   }
 
-  async search(value: string) {
+  async search(value: string): Promise<void> {
     this.blockReset = false;
 
     if (value) {
-      const url = `https://api.punkapi.com/v2/beers?beer_name=${value}&per_page=80`;
+      const url: string = `https://api.punkapi.com/v2/beers?beer_name=${value}&per_page=80`;
 
       this.loading = true;
 
-      this.beers = await this.getBeers(url);
+      this.beers = await fetcher(url);
 
       this.loading = false;
     }
   }
 
   @Watch("page", { immediate: true })
-  async fn() {
+  async fn(): Promise<void> {
     // Maybe should store the data somewhere else, like localstorage
-    this.beers = await this.getBeers(this.url);
+    this.beers = await fetcher(this.url);
   }
 
-  setSorting(key: string) {
+  setSorting(key: string): void {
     if (key === this.sortingKey) {
       this.ascending = !this.ascending;
     } else {
@@ -142,12 +137,12 @@ export default class List extends Vue {
   // Watch two values at once (seems to work)
   @Watch("sortingKey")
   @Watch("ascending")
-  fn2() {
+  fn2(): void {
     this.sortBeers();
   }
 
-  sortBeers() {
-    this.beers.sort((_a: any, _b: any) => {
+  sortBeers(): void {
+    this.beers.sort((_a: APIData | any, _b: APIData | any) => {
       let b: string | number = _b[this.sortingKey];
       let a: string | number = _a[this.sortingKey];
 
@@ -166,9 +161,9 @@ export default class List extends Vue {
 </script>
 
 <style lang="scss" scoped>
-// .search-result--empty {
-//   font-size: calc(40px + (100 - 40) * ((100vw - 300px) / (1600 - 300)));
-//   text-align: center;
-//   opacity: 0.5;
-// }
+.search-result--empty {
+  font-size: calc(40px + (100 - 40) * ((100vw - 300px) / (1600 - 300)));
+  text-align: center;
+  opacity: 0.5;
+}
 </style>

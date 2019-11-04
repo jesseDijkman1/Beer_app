@@ -49,7 +49,6 @@
         <div class="ingredients-category">
           <h3 class="ingredient-category__title font-medium">Hops</h3>
           <grid-list :multiple-columns="true">
-
             <ingredient-card
               :ingredient="hops"
               :key="'hops-'+index"
@@ -106,11 +105,14 @@
 
 <script lang="ts">
 import { Component, Watch, Prop, Vue } from "vue-property-decorator";
+
+import fetcher from "@/modules/fetcher.ts";
+import { APIData, ItemData, MethodData, IngredientData } from "@/types";
+
 import RandomBeerButton from "@/components/ui/RandomBeerButton.vue";
 import DataGroupList from "@/components/ui/DataGroupList.vue";
 
 import GridList from "@/components/layout/GridList.vue";
-// import HorizontalRule from "@/components/ui/HorizontalRule.vue";
 
 import BeerArticleCard from "@/components/card/BeerCard.vue";
 import IngredientCard from "@/components/card/IngredientCard.vue";
@@ -136,59 +138,41 @@ import DataItem from "@/components/ui/DataItem.vue";
     DescriptionList,
     GridList,
     IngredientCard,
-    // HorizontalRule,
     BeerArticleCard,
     BeerArticleCarousel,
   },
 })
 export default class Detail extends Vue {
-  @Prop() id!: number | boolean;
-  @Prop() data!: object | undefined;
+  @Prop() private readonly id!: number | boolean;
+  @Prop() data!: APIData;
   @Prop({ default: false }) hasRandomId!: boolean;
 
-  beer: object = {};
+  beer: APIData | any = {};
 
-  suggestions: object[] = [];
+  suggestions: APIData[] = [];
 
-  methodData: object = {};
-  ingredientData: object = {};
+  methodData: MethodData | any = {};
+  ingredientData: IngredientData[] | any = [];
 
   @Watch("id", { immediate: true })
-  async fn() {
+  async fn(): Promise<void> {
     if (this.data == undefined) {
-      try {
-        const response = await fetch(this.apiUrl);
+      const beer: [APIData, any] | any = await fetcher(this.apiUrl);
 
-        this.beer = (await response.json())[0];
-      } catch (error) {
-        throw new Error("API call failed!");
-      }
+      this.beer = beer[0];
     } else {
       this.beer = this.data;
     }
   }
 
-  fetcher(url: string) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const response = await fetch(url);
-        const results = await response.json();
-
-        resolve(results);
-      } catch (error) {
-        throw new Error("API call failed!");
-      }
-    });
-  }
-
-  async getSuggestions(data: object) {
-    const baseUrl = "https://api.punkapi.com/v2/beers/";
+  async getSuggestions(data: APIData): Promise<APIData[]> {
+    const baseUrl: string = "https://api.punkapi.com/v2/beers/";
     const map = new Map();
 
     // // First try to get enough suggestions based on the food pairings
 
     for (let food of data.food_pairing) {
-      const results: any = await this.fetcher(`${baseUrl}?food=${food}`);
+      const results: APIData[] | any = await fetcher(`${baseUrl}?food=${food}`);
 
       for (let result of results) {
         if (map.size == 3) {
@@ -203,8 +187,8 @@ export default class Detail extends Vue {
 
     if (map.size < 3) {
       // If the food pairings didn't get enough suggestions, use the IBU (bitterness)
-      const findMatchingIbu = async (range: number) => {
-        const results: any = await this.fetcher(
+      const findMatchingIbu = async (range: number): Promise<void> => {
+        const results: APIData[] | any = await fetcher(
           `${baseUrl}?ibu_gt=${data.ibu - range}&ibu_lt=${data.ibu + range}`
         );
 
@@ -232,13 +216,15 @@ export default class Detail extends Vue {
   }
 
   @Watch("beer")
-  async fn2() {
+  async fn2(): Promise<void> {
     this.methodData = this.createMethodData(this.beer);
     this.ingredientData = this.createIngredientData(this.beer);
     this.suggestions = await this.getSuggestions(this.beer);
   }
 
-  createMethodData(data) {
+  createMethodData(
+    data: APIData
+  ): { mash_temp: ItemData[]; fermentation: ItemData[]; twist: string } {
     return {
       mash_temp: [
         {
@@ -263,9 +249,11 @@ export default class Detail extends Vue {
     };
   }
 
-  createIngredientData(data) {
+  createIngredientData(
+    data: APIData
+  ): { malt: ItemData[]; hops: ItemData[]; yeast: string } {
     return {
-      malt: data.ingredients.malt.map(malt => {
+      malt: data.ingredients.malt.map((malt): any => {
         return [
           {
             title: "Name",
@@ -279,7 +267,7 @@ export default class Detail extends Vue {
           },
         ];
       }),
-      hops: data.ingredients.hops.map(hops => {
+      hops: data.ingredients.hops.map((hops): any => {
         return [
           {
             title: "Name",
