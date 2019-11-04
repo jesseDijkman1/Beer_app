@@ -50,14 +50,14 @@
 
 <script lang="ts">
 import { Component, Watch, Prop, Vue } from "vue-property-decorator";
-import BeerArticleCard from "@/components/BeerArticleCard.vue";
+import BeerArticleCard from "@/components/BeerCard.vue";
 import ListItemSeperator from "@/components/ListItemSeperator.vue";
 import GridList from "@/components/GridList.vue";
 import SearchBar from "@/components/SearchBar.vue";
 import FooterPagination from "@/components/FooterPagination.vue";
-import CircleLoader from "@/components/CircleLoader.vue";
+import CircleLoader from "@/components/ui/CircleLoader.vue";
 import SortingHandler from "@/components/SortingHandler.vue";
-import MainHeading from "@/components/headings/MainHeading.vue";
+import MainHeading from "@/components/ui/MainHeading.vue";
 
 @Component({
   components: {

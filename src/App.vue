@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <main-nav></main-nav>
+
     <div id="app-view">
+      <app-button>Normal Button</app-button>
+      <random-beer-button>Random Button</random-beer-button>
+
       <keep-alive include="Home">
         <router-view></router-view>
       </keep-alive>
@@ -13,12 +17,20 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import SiteMap from "@/components/SiteMap.vue";
-import MainNav from "@/components/MainNav.vue";
+import AppFooter from "@/components/layout/AppFooter.vue";
+import AppNavigation from "@/components/layout/AppNavigation.vue";
 import { RouteObject } from "@/types";
 
+import AppButton from "@/components/ui/AppButton.vue";
+import RandomBeerButton from "@/components/RandomBeerButton.vue";
+
 @Component({
-  components: { SiteMap, MainNav },
+  components: {
+    AppFooter,
+    AppNavigation,
+    AppButton,
+    RandomBeerButton,
+  },
 })
 export default class App extends Vue {
   isOpen: boolean = false;
@@ -73,24 +85,20 @@ input {
   background: none;
 }
 
-button:hover {
-  cursor: pointer;
-}
-
 // Button styling
-.beer-button {
-  color: var(--color-main);
-  border: solid 1px var(--color-main);
-  background: none;
-  padding: 0.25em 0.5em;
-  border-radius: 0.25em;
-  transition: all 0.3s ease;
+// .beer-button {
+// color: var(--color-main);
+// border: solid 1px var(--color-main);
+// background: none;
+// padding: 0.25em 0.5em;
+// border-radius: 0.25em;
+// transition: all 0.3s ease;
 
-  &:hover {
-    color: white;
-    border-color: white;
-  }
-}
+// &:hover {
+//   color: white;
+//   border-color: white;
+// }
+// }
 
 // Font classes (mobile first)
 .font-huge {

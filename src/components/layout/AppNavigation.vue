@@ -24,14 +24,14 @@
 
 <script lang="ts">
 import { Component, Watch, Vue } from "vue-property-decorator";
-import RandomBeerLink from "./RandomBeerLink.vue";
+import RandomBeerLink from "@/components/RandomBeerLink.vue";
 
 @Component({
   components: {
     RandomBeerLink,
   },
 })
-export default class MainNav extends Vue {
+export default class extends Vue {
   currentRoute: string = "";
   isOpen: boolean = false;
 

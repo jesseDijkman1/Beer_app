@@ -22,10 +22,6 @@ import DataItem from "@/components/DataItem.vue";
 })
 export default class extends Vue {
   @Prop() data!: object[] | object | string;
-
-  created() {
-    console.log(this.data);
-  }
 }
 </script>
 

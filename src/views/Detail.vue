@@ -115,13 +115,13 @@ import DataGroupList from "@/components/DataGroupList.vue";
 import GridList from "@/components/GridList.vue";
 import ListItemSeperator from "@/components/ListItemSeperator.vue";
 
-import BeerArticleCard from "@/components/BeerArticleCard.vue";
-import BeerArticleCarousel from "@/components/BeerArticleCarousel.vue";
+import BeerArticleCard from "@/components/BeerCard.vue";
+import BeerArticleCarousel from "@/components/AppCarousel.vue";
 
-import MainHeading from "@/components/headings/MainHeading.vue";
-import SectionHeading from "@/components/headings/SectionHeading.vue";
+import MainHeading from "@/components/ui/MainHeading.vue";
+import SectionHeading from "@/components/ui/SectionHeading.vue";
 
-import BeerMethodCard from "@/components/BeerMethodCard.vue";
+import BeerMethodCard from "@/components/MethodCard.vue";
 import DescriptionList from "@/components/DescriptionList.vue";
 
 import DataItem from "@/components/DataItem.vue";

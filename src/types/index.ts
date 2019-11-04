@@ -14,3 +14,5 @@ export interface ColorScheme {
   color: number[];
   value: number;
 }
+
+

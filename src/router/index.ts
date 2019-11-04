@@ -23,6 +23,7 @@ const routes = [
   },
   {
     path: "/beers",
+    name: "beers",
     redirect: "/beers/1"
   },
   {

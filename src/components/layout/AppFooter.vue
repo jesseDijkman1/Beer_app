@@ -14,7 +14,7 @@ import { Component, Vue } from "vue-property-decorator";
 import { RouteObject } from "@/types";
 
 @Component
-export default class SiteMap extends Vue {
+export default class extends Vue {
   routes!: RouteObject[];
 
   beforeCreate() {

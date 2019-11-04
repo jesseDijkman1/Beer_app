@@ -43,11 +43,11 @@ import { Component, Watch, Vue } from "vue-property-decorator";
 
 import RandomBeerButton from "@/components/RandomBeerButton.vue";
 
-import MainHeading from "@/components/headings/MainHeading.vue";
-import SectionHeading from "@/components/headings/SectionHeading.vue";
+import MainHeading from "@/components/ui/MainHeading.vue";
+import SectionHeading from "@/components/ui/SectionHeading.vue";
 
 import ListItemSeperator from "@/components/ListItemSeperator.vue";
-import BeerArticleCard from "@/components/BeerArticleCard.vue";
+import BeerArticleCard from "@/components/BeerCard.vue";
 import GridList from "@/components/GridList.vue";
 import SearchBar from "@/components/SearchBar.vue";
 import SortingHandler from "@/components/SortingHandler.vue";
